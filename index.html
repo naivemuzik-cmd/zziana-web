@@ -1,0 +1,735 @@
+<!doctype html>
+<html lang="es-AR" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>ZZIANA · DJ de Buenos Aires</title>
+<meta name="description" content="ZZIANA (Luciana Capezzuoli) es una DJ de Buenos Aires: Indie Dance, Melodic House, Deep House y Techno. Sets completos, bio, fotos y contacto para bookings.">
+<meta name="theme-color" content="#05060A">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="profile">
+<meta property="og:title" content="ZZIANA · DJ de Buenos Aires">
+<meta property="og:description" content="ZZIANA (Luciana Capezzuoli) es una DJ de Buenos Aires: Indie Dance, Melodic House, Deep House y Techno. Sets completos, bio, fotos y contacto para bookings.">
+<meta property="og:image" content="https://naivemuzik-cmd.github.io/zziana-web/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="es_AR">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="assets/fonts/familjen-grotesk-normal-400-700-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/archivo-normal-700-800-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" as="image" type="image/avif" href="assets/video/hero-desktop-poster.avif" fetchpriority="high" media="(min-width: 701px)">
+<link rel="preload" as="image" type="image/avif" href="assets/video/hero-mobile-poster.avif" fetchpriority="high" media="(max-width: 700px)">
+<link rel="stylesheet" href="assets/css/fonts.css">
+<link rel="stylesheet" href="assets/css/site.css">
+<script>
+  // banderas: JS activo y movimiento permitido (si el JS del hero no arranca en 5 s, se muestra todo quieto)
+  (function (h) {
+    h.classList.remove('no-js'); h.classList.add('js');
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      h.classList.add('js-motion');
+      setTimeout(function () { if (!window.__zzHero) h.classList.remove('js-motion'); }, 5000);
+    }
+  })(document.documentElement);
+</script>
+<script defer src="assets/vendor/gsap.min.js"></script>
+<script defer src="assets/vendor/ScrollTrigger.min.js"></script>
+<script type="module" src="assets/js/main.js"></script>
+<!-- TODO al publicar: URL absoluta en "image" y "thumbnailUrl" -->
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "Person",
+   "name": "ZZIANA",
+   "alternateName": "Luciana Capezzuoli",
+   "jobTitle": "DJ",
+   "homeLocation": {
+    "@type": "Place",
+    "name": "Buenos Aires, Argentina"
+   },
+   "memberOf": {
+    "@type": "Organization",
+    "name": "No Tempo",
+    "sameAs": "https://www.instagram.com/notempo.crew/"
+   },
+   "sameAs": [
+    "https://soundcloud.com/zzianamusic/",
+    "https://www.youtube.com/@ZZIANA",
+    "https://www.instagram.com/zziana___/"
+   ],
+   "image": "og.jpg"
+  },
+  {
+   "@type": "VideoObject",
+   "name": "Apertura para Pavel Petrov",
+   "thumbnailUrl": "assets/img/sets/k4kYE16Va8w-1280.jpg",
+   "uploadDate": "2026-05-01",
+   "duration": "PT59M15S",
+   "embedUrl": "https://www.youtube-nocookie.com/embed/k4kYE16Va8w"
+  },
+  {
+   "@type": "VideoObject",
+   "name": "Apertura para Rafael Cerato",
+   "thumbnailUrl": "assets/img/sets/EbGqbyhoOrA-1280.jpg",
+   "uploadDate": "2026-06-01",
+   "duration": "PT1H9M14S",
+   "embedUrl": "https://www.youtube-nocookie.com/embed/EbGqbyhoOrA"
+  },
+  {
+   "@type": "VideoObject",
+   "name": "No Tempo Session #01",
+   "thumbnailUrl": "assets/img/sets/KgnIL2gZra4-1280.jpg",
+   "uploadDate": "2026-05-08",
+   "duration": "PT1H10M9S",
+   "embedUrl": "https://www.youtube-nocookie.com/embed/KgnIL2gZra4"
+  }
+ ]
+}
+</script>
+<style>
+/* solo en el link de propuesta: marca discreta junto al logo */
+.propuesta {
+  font-family: var(--f-mono, ui-monospace, monospace); font-size: .6875rem; line-height: 1;
+  letter-spacing: .1em; text-transform: uppercase; white-space: nowrap;
+  color: var(--hielo, #A8BDFF); border: 1px solid currentColor; padding: .45em .6em; margin-inline-start: 12px;
+  align-self: center; opacity: .9;
+}
+/* en celular el header ya va lleno (logo, ES·EN, Menú): queda solo "Propuesta", sin borde */
+@media (max-width: 560px) {
+  .propuesta { border: 0; padding: 0; margin-inline-start: 10px; font-size: .625rem; letter-spacing: .08em; }
+  .prop-mas { display: none; }
+}
+/* celulares chicos: no entran logo + marca + ES·EN + Menú; el cambio de idioma queda en el pie
+   (y el idioma inicial ya sale del navegador) */
+@media (max-width: 380px) { .site-header .lang { display: none; } }
+</style>
+</head>
+<body>
+<svg class="sprite" aria-hidden="true" focusable="false"><symbol id="glyph-a-title" overflow="visible"><path fill-rule="evenodd" d="M485.6 6.6 L589.5 186.8 L381.6 186.8Z M485.6 78.6 L527.3 150.8 L443.9 150.8Z"/></symbol><symbol id="glyph-a" overflow="visible"><path fill-rule="evenodd" d="M485.6 6.6 L589.5 186.8 L381.6 186.8Z M485.7 61.6 L543.1 161.1 L428.3 161.1Z"/></symbol><symbol id="wordmark" viewBox="0 0 1000 195.1"><path fill-rule="evenodd" d="M137.8 187.7 L0.0 187.8 L0.0 187.4 L91.3 31.6 L14.9 31.4 L14.9 6.7 L136.2 6.6 L136.3 7.8 L45.6 161.1 L137.8 161.5Z"/><path fill-rule="evenodd" d="M298.9 187.8 L161.1 187.7 L252.7 32.2 L252.4 31.5 L176.6 31.5 L176.2 31.0 L176.2 7.2 L176.6 6.5 L297.8 6.6 L297.3 8.4 L207.0 161.1 L298.9 161.4 L299.4 162.3 L299.4 187.4Z"/><path fill-rule="evenodd" d="M362.2 187.7 L333.5 187.8 L332.9 187.4 L332.9 7.2 L333.5 6.5 L361.6 6.5 L362.4 7.2Z"/><path fill-rule="evenodd" d="M485.6 6.6 L589.5 186.8 L381.6 186.8Z M485.7 61.6 L543.1 161.1 L428.3 161.1Z"/><path fill-rule="evenodd" d="M770.3 194.6 L652.7 81.8 L644.2 72.8 L636.0 62.4 L635.6 63.2 L635.6 187.4 L634.8 187.8 L608.6 187.6 L608.6 0.0 L723.7 110.3 L733.5 120.5 L742.8 131.6 L743.3 130.7 L743.3 7.2 L744.0 6.5 L770.3 6.6Z"/><path fill-rule="evenodd" d="M895.7 6.5 L999.7 186.8 L791.6 186.8Z M895.9 61.8 L953.2 161.1 L838.6 161.1Z"/></symbol></svg>
+<a class="skip" href="#sets" data-i18n="skip">Saltar al contenido</a>
+
+<header class="site-header">
+  <a class="home" href="#top" aria-label="ZZIANA, inicio" data-i18n-attr="aria-label:nav.home"><svg class="mono" viewBox="0 0 1000 751.7" height="28" width="37.2" aria-hidden="true" focusable="false"><path fill="currentColor" fill-rule="evenodd" d="M443.2 751.6 L-0.0 751.5 L607.3 139.5 L485.4 139.4 L171.8 454.5 L171.7 89.7 L459.0 89.6 L547.8 0.5 L999.8 -0.0 L624.0 378.6 L392.6 612.4 L514.4 612.6 L827.9 298.2 L828.0 661.8 L534.7 661.9Z M423.2 702.2 L463.9 662.0 L273.7 661.8 L880.8 49.2 L576.6 49.3 L535.9 89.5 L726.1 89.7 L118.9 702.2Z M221.7 329.0 L409.7 139.5 L221.6 139.5Z M778.2 612.4 L778.2 417.5 L585.2 612.4Z"/></svg></a>
+  <span class="propuesta"><span data-i18n="prop.tag">Propuesta</span><span class="prop-mas" data-i18n="prop.tag2"> · borrador</span></span>
+  <nav class="nav" aria-label="Secciones" data-i18n-attr="aria-label:nav.label">
+    <ul>
+      <li><a href="#sets" data-i18n="nav.sets">Sets</a></li>
+      <li><a href="#bio" data-i18n="nav.bio">Bio</a></li>
+      <li><a href="#fotos" data-i18n="nav.fotos">Fotos</a></li>
+      <li><a href="#en-vivo" data-i18n="nav.vivo">En vivo</a></li>
+      <li><a href="#no-tempo" data-i18n="nav.nt">No Tempo</a></li>
+    </ul>
+  </nav>
+  <div class="header-end">
+    <div class="lang" role="group" aria-label="Idioma" data-i18n-attr="aria-label:lang.group">
+      <button class="lang-btn" type="button" data-lang="es" aria-pressed="true" aria-label="Ver el sitio en español" data-i18n-attr="aria-label:lang.es">ES</button><span aria-hidden="true">·</span><button class="lang-btn" type="button" data-lang="en" aria-pressed="false" aria-label="Ver el sitio en inglés" data-i18n-attr="aria-label:lang.en">EN</button>
+    </div>
+    <a class="btn btn-primary btn-sm book" href="#contratar" data-i18n="nav.book">Bookings</a>
+    <button class="menu-btn" type="button" popovertarget="menu" data-i18n="nav.menu">Menú</button>
+  </div>
+  <div id="menu" class="menu" popover>
+    <div class="menu-top">
+      <svg class="mono" viewBox="0 0 1000 751.7" height="28" width="37.2" aria-hidden="true" focusable="false"><path fill="currentColor" fill-rule="evenodd" d="M443.2 751.6 L-0.0 751.5 L607.3 139.5 L485.4 139.4 L171.8 454.5 L171.7 89.7 L459.0 89.6 L547.8 0.5 L999.8 -0.0 L624.0 378.6 L392.6 612.4 L514.4 612.6 L827.9 298.2 L828.0 661.8 L534.7 661.9Z M423.2 702.2 L463.9 662.0 L273.7 661.8 L880.8 49.2 L576.6 49.3 L535.9 89.5 L726.1 89.7 L118.9 702.2Z M221.7 329.0 L409.7 139.5 L221.6 139.5Z M778.2 612.4 L778.2 417.5 L585.2 612.4Z"/></svg>
+      <button class="menu-close" type="button" popovertarget="menu" popovertargetaction="hide" data-i18n="nav.close">Cerrar</button>
+    </div>
+    <nav aria-label="Menú" data-i18n-attr="aria-label:nav.menu">
+      <ul>
+        <li><a href="#contratar" data-i18n="nav.book">Bookings</a></li>
+        <li><a href="#sets" data-i18n="nav.sets">Sets</a></li>
+        <li><a href="#bio" data-i18n="nav.bio">Bio</a></li>
+        <li><a href="#fotos" data-i18n="nav.fotos">Fotos</a></li>
+        <li><a href="#en-vivo" data-i18n="nav.vivo">En vivo</a></li>
+        <li><a href="#no-tempo" data-i18n="nav.nt">No Tempo</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero" id="top" data-haze="0.25">
+    <div class="stage">
+      <video class="aperture" muted playsinline loop preload="none" aria-hidden="true" tabindex="-1"><source src="assets/video/hero-mobile.av1.mp4" type='video/mp4; codecs="av01.0.08M.08"' media="(max-width: 700px)"><source src="assets/video/hero-mobile.h264.mp4" type='video/mp4; codecs="avc1.640028"' media="(max-width: 700px)"><source src="assets/video/hero-desktop.av1.mp4" type='video/mp4; codecs="av01.0.08M.08"'><source src="assets/video/hero-desktop.h264.mp4" type='video/mp4; codecs="avc1.640028"'></video>
+      <svg class="ring" aria-hidden="true" focusable="false"><path class="ring-path" fill-rule="evenodd"/></svg>
+      <h1 class="wordmark">
+        <svg role="img" aria-label="ZZIANA" viewBox="0 0 1000 195.1" fill="currentColor" fill-rule="evenodd">
+          <g class="glyph" data-i="0"><path d="M137.8 187.7 L0.0 187.8 L0.0 187.4 L91.3 31.6 L14.9 31.4 L14.9 6.7 L136.2 6.6 L136.3 7.8 L45.6 161.1 L137.8 161.5Z"/></g>
+          <g class="glyph" data-i="1"><path d="M298.9 187.8 L161.1 187.7 L252.7 32.2 L252.4 31.5 L176.6 31.5 L176.2 31.0 L176.2 7.2 L176.6 6.5 L297.8 6.6 L297.3 8.4 L207.0 161.1 L298.9 161.4 L299.4 162.3 L299.4 187.4Z"/></g>
+          <g class="glyph" data-i="2"><path d="M362.2 187.7 L333.5 187.8 L332.9 187.4 L332.9 7.2 L333.5 6.5 L361.6 6.5 L362.4 7.2Z"/></g>
+          <g class="glyph" data-i="3"><path d="M485.6 6.6 L589.5 186.8 L381.6 186.8Z M485.7 61.6 L543.1 161.1 L428.3 161.1Z"/></g>
+          <g class="glyph" data-i="4"><path d="M770.3 194.6 L652.7 81.8 L644.2 72.8 L636.0 62.4 L635.6 63.2 L635.6 187.4 L634.8 187.8 L608.6 187.6 L608.6 0.0 L723.7 110.3 L733.5 120.5 L742.8 131.6 L743.3 130.7 L743.3 7.2 L744.0 6.5 L770.3 6.6Z"/></g>
+          <g class="glyph" data-i="5"><path d="M895.7 6.5 L999.7 186.8 L791.6 186.8Z M895.9 61.8 L953.2 161.1 L838.6 161.1Z"/></g>
+        </svg>
+      </h1>
+      <div class="hero-ui">
+        <p class="hero-meta"><span data-i18n="hero.dj">DJ&nbsp;· Buenos&nbsp;Aires</span><span data-i18n="hero.genres">Indie&nbsp;Dance&nbsp;· Melodic&nbsp;House&nbsp;· Deep&nbsp;House&nbsp;· Techno</span></p>
+        <div class="hero-cta"><a class="btn btn-primary" href="#sets"><span data-i18n="hero.cta">Escuchar los sets</span><svg class="ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M1.5 3 L10.5 3 L6 10.8Z" fill="currentColor"/></svg></a></div>
+        <div class="hero-foot">
+          <span class="credit" data-i18n="hero.caption">Río&nbsp;Electronic&nbsp;Music&nbsp;· Buenos&nbsp;Aires</span>
+          <button class="video-toggle" type="button" data-i18n="video.pause">Pausar video</button>
+        </div>
+      </div>
+      <div class="stage-fade" aria-hidden="true"></div>
+    </div>
+    <div class="hero-sentinel" aria-hidden="true"></div>
+  </section>
+
+  <section class="sets" id="sets" tabindex="-1" data-haze="0.55" aria-labelledby="sets-h">
+    <div class="wrap">
+      <header class="sec-head reveal">
+        <h2 class="title" id="sets-h" style="--len:4.0" data-i18n="sets.h">Sets</h2>
+        <p class="tag" data-i18n="sets.tag">3 sets · 3:18:38</p>
+        <p class="intro" data-i18n="sets.intro">Tres sets completos, grabados en vivo: dos aperturas en Río Electronic Music y la primera No Tempo Session.</p>
+      </header>
+      <p class="vh" id="sets-live" aria-live="polite"></p>
+      <div class="set-list">
+      <article class="set" id="set-a" data-yt="k4kYE16Va8w" data-key="setA" style="--avg:#353822">
+       <div class="set-in">
+        <p class="eyebrow"><span class="now" data-i18n="set.now" hidden>Reproduciendo</span><span data-i18n="setA.eyebrow">Río&nbsp;Electronic&nbsp;Music&nbsp;· Buenos&nbsp;Aires&nbsp;· Enero&nbsp;2026</span></p>
+        <div class="media-slot">
+          <div class="facade">
+            <picture><source type="image/avif" srcset="assets/img/sets/k4kYE16Va8w-640.avif 640w, assets/img/sets/k4kYE16Va8w-960.avif 960w, assets/img/sets/k4kYE16Va8w-1280.avif 1280w" sizes="(min-width: 1440px) 740px, (min-width: 800px) 56vw, 100vw"><source type="image/webp" srcset="assets/img/sets/k4kYE16Va8w-640.webp 640w, assets/img/sets/k4kYE16Va8w-960.webp 960w, assets/img/sets/k4kYE16Va8w-1280.webp 1280w" sizes="(min-width: 1440px) 740px, (min-width: 800px) 56vw, 100vw"><img src="assets/img/sets/k4kYE16Va8w-960.jpg" srcset="assets/img/sets/k4kYE16Va8w-640.jpg 640w, assets/img/sets/k4kYE16Va8w-960.jpg 960w, assets/img/sets/k4kYE16Va8w-1280.jpg 1280w" sizes="(min-width: 1440px) 740px, (min-width: 800px) 56vw, 100vw" width="1280" height="720" alt="ZZIANA mezclando en la cabina de Río Electronic Music, bajo luces y pantallas verdes y flamencos decorativos" data-i18n-attr="alt:setA.alt" decoding="async"></picture>
+            <button class="play" type="button" aria-label="Escuchar el set: Apertura para Pavel Petrov" data-i18n-attr="aria-label:setA.play">
+              <picture><source type="image/avif" srcset="assets/img/sets/k4kYE16Va8w-640.avif 640w, assets/img/sets/k4kYE16Va8w-960.avif 960w, assets/img/sets/k4kYE16Va8w-1280.avif 1280w" sizes="(min-width: 1440px) 740px, (min-width: 800px) 56vw, 100vw"><source type="image/webp" srcset="assets/img/sets/k4kYE16Va8w-640.webp 640w, assets/img/sets/k4kYE16Va8w-960.webp 960w, assets/img/sets/k4kYE16Va8w-1280.webp 1280w" sizes="(min-width: 1440px) 740px, (min-width: 800px) 56vw, 100vw"><img class="tri-img" src="assets/img/sets/k4kYE16Va8w-960.jpg" srcset="assets/img/sets/k4kYE16Va8w-640.jpg 640w, assets/img/sets/k4kYE16Va8w-960.jpg 960w, assets/img/sets/k4kYE16Va8w-1280.jpg 1280w" sizes="(min-width: 1440px) 740px, (min-width: 800px) 56vw, 100vw" width="1280" height="720" alt="" decoding="async"></picture>
+              <svg class="tri" viewBox="-28 -48 84 96" aria-hidden="true" focusable="false"><path pathLength="1" d="M42.94 0 L-21.47 37.19 L-21.47 -37.19Z"/></svg>
+            </button>
+          </div>
+        </div>
+        <h3 class="set-title" data-i18n="setA.title">Apertura para Pavel Petrov</h3>
+        <p class="dur"><time datetime="PT59M15S">59<span class="c">:</span>15</time></p>
+        <p class="set-meta" data-i18n="setA.meta">13 temas&nbsp;· Indie&nbsp;Dance &amp; Melodic&nbsp;House</p>
+        <p class="set-note" data-i18n="setA.note">Publicado en el canal de No Tempo</p>
+        <div class="set-ctrl">
+          <button class="btn btn-primary listen" type="button" data-i18n="set.listen">Escuchar el set</button>
+          <a class="link" href="https://www.youtube.com/watch?v=k4kYE16Va8w" target="_blank" rel="noopener"><span data-i18n="set.yt">Abrir en YouTube</span><span aria-hidden="true"> ↗</span><span class="vh" data-i18n="ext.new">(se abre en otra pestaña)</span></a>
+        </div>
+        <details class="tracklist" name="tracklist">
+          <summary><svg class="ico tri-ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 1.6 L10.6 6 L3 10.4Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="miter"/></svg><span class="tl-label" data-i18n="setA.tl">Ver tracklist · 13 temas</span></summary>
+          <div class="tl-panel">
+            <!-- tracklist:k4kYE16Va8w -->
+        <ol class="tracklist-list" data-count="13">
+          <li><span class="t-artist">Alex Medina</span> — <span class="t-title">Della Liberta</span></li>
+          <li><span class="t-artist">Rick Offen</span> — <span class="t-title">MORDIDA (Abuk Remix)</span></li>
+          <li><span class="t-artist">AIKON</span> — <span class="t-title">Broken System</span></li>
+          <li><span class="t-artist">Rafael, Eliza Legzdina, Nariman</span> — <span class="t-title">Another Dimension</span></li>
+          <li><span class="t-artist">Sammy Legs</span> — <span class="t-title">Turunga (Sanoi Remix)</span></li>
+          <li><span class="t-artist">Maxim Lany</span> — <span class="t-title">Bahia</span></li>
+          <li><span class="t-artist">Corrie</span> — <span class="t-title">Brief Encounter</span></li>
+          <li><span class="t-artist">Slow Motion, Alt Control, Millero</span> — <span class="t-title">Dynamite</span></li>
+          <li><span class="t-artist">Briska</span> — <span class="t-title">Silence Cœur</span></li>
+          <li><span class="t-artist">Derderwandert</span> — <span class="t-title">Situationship</span></li>
+          <li><span class="t-artist">Deniz Kabu</span> — <span class="t-title">Bring the Noize</span></li>
+          <li><span class="t-artist">B0g</span> — <span class="t-title">This Feeling</span></li>
+          <li><span class="t-artist">EREZ, Mita Gami</span> — <span class="t-title">Where’s My Voice?</span></li>
+        </ol>
+        <!-- /tracklist:k4kYE16Va8w -->
+          </div>
+        </details>
+       </div>
+      </article>
+      <article class="set" id="set-b" data-yt="EbGqbyhoOrA" data-key="setB" style="--avg:#30272c">
+       <div class="set-in">
+        <p class="eyebrow"><span class="now" data-i18n="set.now" hidden>Reproduciendo</span><span data-i18n="setB.eyebrow">Río&nbsp;Electronic&nbsp;Music&nbsp;· Buenos&nbsp;Aires&nbsp;· 10.05.2026</span></p>
+        <div class="media-slot">
+          <div class="facade">
+            <picture><source type="image/avif" srcset="assets/img/sets/EbGqbyhoOrA-640.avif 640w, assets/img/sets/EbGqbyhoOrA-960.avif 960w, assets/img/sets/EbGqbyhoOrA-1280.avif 1280w" sizes="(min-width: 1440px) 740px, (min-width: 800px) 56vw, 100vw"><source type="image/webp" srcset="assets/img/sets/EbGqbyhoOrA-640.webp 640w, assets/img/sets/EbGqbyhoOrA-960.webp 960w, assets/img/sets/EbGqbyhoOrA-1280.webp 1280w" sizes="(min-width: 1440px) 740px, (min-width: 800px) 56vw, 100vw"><img src="assets/img/sets/EbGqbyhoOrA-960.jpg" srcset="assets/img/sets/EbGqbyhoOrA-640.jpg 640w, assets/img/sets/EbGqbyhoOrA-960.jpg 960w, assets/img/sets/EbGqbyhoOrA-1280.jpg 1280w" sizes="(min-width: 1440px) 740px, (min-width: 800px) 56vw, 100vw" width="1280" height="720" alt="ZZIANA con los ojos cerrados detrás de una cabina con rosas, bajo una luz de neón azul" data-i18n-attr="alt:setB.alt" loading="lazy" decoding="async"></picture>
+            <button class="play" type="button" aria-label="Escuchar el set: Apertura para Rafael Cerato" data-i18n-attr="aria-label:setB.play">
+              <picture><source type="image/avif" srcset="assets/img/sets/EbGqbyhoOrA-640.avif 640w, assets/img/sets/EbGqbyhoOrA-960.avif 960w, assets/img/sets/EbGqbyhoOrA-1280.avif 1280w" sizes="(min-width: 1440px) 740px, (min-width: 800px) 56vw, 100vw"><source type="image/webp" srcset="assets/img/sets/EbGqbyhoOrA-640.webp 640w, assets/img/sets/EbGqbyhoOrA-960.webp 960w, assets/img/sets/EbGqbyhoOrA-1280.webp 1280w" sizes="(min-width: 1440px) 740px, (min-width: 800px) 56vw, 100vw"><img class="tri-img" src="assets/img/sets/EbGqbyhoOrA-960.jpg" srcset="assets/img/sets/EbGqbyhoOrA-640.jpg 640w, assets/img/sets/EbGqbyhoOrA-960.jpg 960w, assets/img/sets/EbGqbyhoOrA-1280.jpg 1280w" sizes="(min-width: 1440px) 740px, (min-width: 800px) 56vw, 100vw" width="1280" height="720" alt="" loading="lazy" decoding="async"></picture>
+              <svg class="tri" viewBox="-28 -48 84 96" aria-hidden="true" focusable="false"><path pathLength="1" d="M42.94 0 L-21.47 37.19 L-21.47 -37.19Z"/></svg>
+            </button>
+          </div>
+        </div>
+        <h3 class="set-title" data-i18n="setB.title">Apertura para Rafael Cerato</h3>
+        <p class="dur"><time datetime="PT1H9M14S">1<span class="c">:</span>09<span class="c">:</span>14</time></p>
+        <p class="set-meta" data-i18n="setB.meta">15 temas&nbsp;· Indie&nbsp;Dance &amp; Melodic&nbsp;House</p>
+        <p class="set-note" data-i18n="setB.note">Publicado en el canal de ZZIANA</p>
+        <div class="set-ctrl">
+          <button class="btn btn-primary listen" type="button" data-i18n="set.listen">Escuchar el set</button>
+          <a class="link" href="https://www.youtube.com/watch?v=EbGqbyhoOrA" target="_blank" rel="noopener"><span data-i18n="set.yt">Abrir en YouTube</span><span aria-hidden="true"> ↗</span><span class="vh" data-i18n="ext.new">(se abre en otra pestaña)</span></a>
+        </div>
+        <details class="tracklist" name="tracklist">
+          <summary><svg class="ico tri-ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 1.6 L10.6 6 L3 10.4Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="miter"/></svg><span class="tl-label" data-i18n="setB.tl">Ver tracklist · 15 temas</span></summary>
+          <div class="tl-panel">
+            <!-- tracklist:EbGqbyhoOrA -->
+        <ol class="tracklist-list" data-count="15">
+          <li><span class="t-artist">Fernando Campo</span> — <span class="t-title">Soul (Original Mix)</span></li>
+          <li><span class="t-artist">Shyam P, Nhii</span> — <span class="t-title">Awake (STATE Remix)</span></li>
+          <li><span class="t-artist">Samuel Lupian</span> — <span class="t-title">You Know Me (Original Mix)</span></li>
+          <li><span class="t-artist">no_ip</span> — <span class="t-title">Hold On</span></li>
+          <li><span class="t-artist">Egehan</span> — <span class="t-title">Grasp and Outlast (Original Mix)</span></li>
+          <li><span class="t-artist">Broken Hill</span> — <span class="t-title">Rhythm Perception (Original Mix)</span></li>
+          <li><span class="t-artist">Fulltone, Parallelle</span> — <span class="t-title">Without Any Doubt (Original Mix)</span></li>
+          <li><span class="t-artist">Gespona</span> — <span class="t-title">Komplex</span></li>
+          <li><span class="t-artist">Adrian Roman</span> — <span class="t-title">Detroit Boy (Argia Remix)</span></li>
+          <li><span class="t-artist">Knorst</span> — <span class="t-title">Loud (Original Mix)</span></li>
+          <li><span class="t-artist">LUCH</span> — <span class="t-title">Siren's Flicker (Original Mix)</span></li>
+          <li><span class="t-artist">Chris Bowl</span> — <span class="t-title">Preach (Original Mix)</span></li>
+          <li><span class="t-artist">Sam Shure</span> — <span class="t-title">Qualified (Original Mix)</span></li>
+          <li><span class="t-artist">The Flirts, Beltran</span> — <span class="t-title">Passion (R U Satisfied) (Extended Mix)</span></li>
+          <li><span class="t-artist">Rudy With a Hoodie</span> — <span class="t-title">Kerning City (Original Mix)</span></li>
+        </ol>
+        <!-- /tracklist:EbGqbyhoOrA -->
+          </div>
+        </details>
+       </div>
+      </article>
+      <article class="set" id="set-c" data-yt="KgnIL2gZra4" data-key="setC" style="--avg:#151b43">
+       <div class="set-in">
+        <p class="eyebrow"><span class="now" data-i18n="set.now" hidden>Reproduciendo</span><span data-i18n="setC.eyebrow">No&nbsp;Tempo&nbsp;· B2B&nbsp;Studio&nbsp;· Buenos&nbsp;Aires</span></p>
+        <div class="media-slot">
+          <div class="facade">
+            <picture><source type="image/avif" srcset="assets/img/sets/KgnIL2gZra4-640.avif 640w, assets/img/sets/KgnIL2gZra4-960.avif 960w, assets/img/sets/KgnIL2gZra4-1280.avif 1280w" sizes="(min-width: 1440px) 740px, (min-width: 800px) 56vw, 100vw"><source type="image/webp" srcset="assets/img/sets/KgnIL2gZra4-640.webp 640w, assets/img/sets/KgnIL2gZra4-960.webp 960w, assets/img/sets/KgnIL2gZra4-1280.webp 1280w" sizes="(min-width: 1440px) 740px, (min-width: 800px) 56vw, 100vw"><img src="assets/img/sets/KgnIL2gZra4-960.jpg" srcset="assets/img/sets/KgnIL2gZra4-640.jpg 640w, assets/img/sets/KgnIL2gZra4-960.jpg 960w, assets/img/sets/KgnIL2gZra4-1280.jpg 1280w" sizes="(min-width: 1440px) 740px, (min-width: 800px) 56vw, 100vw" width="1280" height="720" alt="ZZIANA en los CDJ en un estudio iluminado de azul, con gente bailando detrás" data-i18n-attr="alt:setC.alt" loading="lazy" decoding="async"></picture>
+            <button class="play" type="button" aria-label="Escuchar el set: No Tempo Session #01" data-i18n-attr="aria-label:setC.play">
+              <picture><source type="image/avif" srcset="assets/img/sets/KgnIL2gZra4-640.avif 640w, assets/img/sets/KgnIL2gZra4-960.avif 960w, assets/img/sets/KgnIL2gZra4-1280.avif 1280w" sizes="(min-width: 1440px) 740px, (min-width: 800px) 56vw, 100vw"><source type="image/webp" srcset="assets/img/sets/KgnIL2gZra4-640.webp 640w, assets/img/sets/KgnIL2gZra4-960.webp 960w, assets/img/sets/KgnIL2gZra4-1280.webp 1280w" sizes="(min-width: 1440px) 740px, (min-width: 800px) 56vw, 100vw"><img class="tri-img" src="assets/img/sets/KgnIL2gZra4-960.jpg" srcset="assets/img/sets/KgnIL2gZra4-640.jpg 640w, assets/img/sets/KgnIL2gZra4-960.jpg 960w, assets/img/sets/KgnIL2gZra4-1280.jpg 1280w" sizes="(min-width: 1440px) 740px, (min-width: 800px) 56vw, 100vw" width="1280" height="720" alt="" loading="lazy" decoding="async"></picture>
+              <svg class="tri" viewBox="-28 -48 84 96" aria-hidden="true" focusable="false"><path pathLength="1" d="M42.94 0 L-21.47 37.19 L-21.47 -37.19Z"/></svg>
+            </button>
+          </div>
+        </div>
+        <h3 class="set-title" data-i18n="setC.title">No Tempo Session #01</h3>
+        <p class="dur"><time datetime="PT1H10M9S">1<span class="c">:</span>10<span class="c">:</span>09</time></p>
+        <p class="set-meta" data-i18n="setC.meta">17 temas&nbsp;· Grabado en vivo</p>
+        <p class="set-note" data-i18n="setC.note">Publicado en el canal de No Tempo</p>
+        <div class="set-ctrl">
+          <button class="btn btn-primary listen" type="button" data-i18n="set.listen">Escuchar el set</button>
+          <a class="link" href="https://www.youtube.com/watch?v=KgnIL2gZra4" target="_blank" rel="noopener"><span data-i18n="set.yt">Abrir en YouTube</span><span aria-hidden="true"> ↗</span><span class="vh" data-i18n="ext.new">(se abre en otra pestaña)</span></a>
+        </div>
+        <details class="tracklist" name="tracklist">
+          <summary><svg class="ico tri-ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 1.6 L10.6 6 L3 10.4Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="miter"/></svg><span class="tl-label" data-i18n="setC.tl">Ver tracklist · 17 temas</span></summary>
+          <div class="tl-panel">
+            <!-- tracklist:KgnIL2gZra4 -->
+        <ol class="tracklist-list" data-count="17">
+          <li><span class="t-artist">LUCH</span> — <span class="t-title">UH HUH (Original Mix)</span></li>
+          <li><span class="t-artist">Theus Mago, Mon Qalamari</span> — <span class="t-title">Pesadon (Theus Mago Remix)</span></li>
+          <li><span class="t-artist">Impérieux</span> — <span class="t-title">Still Minus (Original Mix)</span></li>
+          <li><span class="t-artist">Rivellino, Juanito State</span> — <span class="t-title">She's A Baddie (Original Mix)</span></li>
+          <li><span class="t-artist">Fec</span> — <span class="t-title">Here To Flow (Original Mix)</span></li>
+          <li><span class="t-artist">Ramon Bedoya</span> — <span class="t-title">And I Say</span></li>
+          <li><span class="t-artist">Golden Hour, Marvio (AR)</span> — <span class="t-title">Exótico (Original Mix)</span></li>
+          <li><span class="t-artist">Daphni</span> — <span class="t-title">Beto's Horns (Daphni Remix)</span></li>
+          <li><span class="t-artist">Man Power</span> — <span class="t-title">We Trawl The Hurts (Deetron Remix Dub)</span></li>
+          <li><span class="t-artist">Alerch</span> — <span class="t-title">Lil' Cloudhead (Fec's Re-Birth)</span></li>
+          <li><span class="t-artist">Vintage Culture, OMRI.</span> — <span class="t-title">Rock The Beat (Extended)</span></li>
+          <li><span class="t-artist">Fec</span> — <span class="t-title">Not My Self (Original Mix)</span></li>
+          <li><span class="t-artist">Egehan</span> — <span class="t-title">Grasp and Outlast (Original Mix)</span></li>
+          <li><span class="t-artist">Floating Points</span> — <span class="t-title">Key103 (Original Mix)</span></li>
+          <li><span class="t-artist">Daphni</span> — <span class="t-title">Fly Away (Deetron Drum &amp; Bass Mix)</span></li>
+          <li><span class="t-artist">MëthyI Ethel</span> — <span class="t-title">Matters (Whitesquare Remix)</span></li>
+          <li><span class="t-artist">Madonna</span> — <span class="t-title">Beautiful Stranger (Original)</span></li>
+        </ol>
+        <!-- /tracklist:KgnIL2gZra4 -->
+          </div>
+        </details>
+       </div>
+      </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="bio" id="bio" tabindex="-1" data-haze="0.35" aria-labelledby="bio-h">
+    <div class="wrap bio-grid">
+      <h2 class="title reveal" id="bio-h" style="--len:9.0" data-i18n="bio.h">Biografía</h2>
+      <figure class="portrait">
+        <span class="frame veil" style="background-color:#301a13"><picture><source type="image/avif" srcset="assets/img/bio-portrait-480.avif 480w, assets/img/bio-portrait-800.avif 800w, assets/img/bio-portrait-1200.avif 1200w" sizes="(min-width: 900px) 34vw, 100vw"><source type="image/webp" srcset="assets/img/bio-portrait-480.webp 480w, assets/img/bio-portrait-800.webp 800w, assets/img/bio-portrait-1200.webp 1200w" sizes="(min-width: 900px) 34vw, 100vw"><img src="assets/img/bio-portrait-800.jpg" srcset="assets/img/bio-portrait-480.jpg 480w, assets/img/bio-portrait-800.jpg 800w, assets/img/bio-portrait-1200.jpg 1200w" sizes="(min-width: 900px) 34vw, 100vw" width="1292" height="2296" alt="Primer plano de ZZIANA mirando por encima del hombro, con campera de cuero negra sobre fondo rojo" data-i18n-attr="alt:bio.alt" loading="lazy" decoding="async"></picture></span>
+      </figure>
+      <div class="bio-text">
+        <p class="lead reveal" data-i18n="bio.lead">ZZIANA (Luciana Capezzuoli) es una DJ de Buenos Aires que vive la música como una forma de conexión, expresión y encuentro dentro de la pista.</p>
+        <div class="bio-cols reveal">
+            <p data-i18n="bio.p1">A través de una propuesta artística multifacética, sus sets nacen desde la sensibilidad, la intuición y el deseo de construir momentos reales, donde la energía, el groove y la emoción puedan convivir de manera natural.</p>
+            <p data-i18n="bio.p2">Su universo musical recorre distintos matices del Indie Dance, Melodic House, Deep House y Techno, moviéndose libremente entre influencias y géneros sin perder identidad. La curiosidad musical y el interés constante por descubrir nuevos artistas, escenas y sonidos enriquecen continuamente su universo artístico y acompañan una propuesta en permanente expansión.</p>
+            <p data-i18n="bio.p3">Influenciada por el costado más hipnótico y emocional de la cultura club, desarrolla sesiones de dinámica progresiva donde conviven atmósferas profundas, melodías envolventes y producciones de gran identidad sonora, manteniendo siempre una conexión genuina con la energía de la pista.</p>
+            <p data-i18n="bio.p4">Esta forma de construir y compartir sus recorridos musicales la llevó a un aprendizaje constante, explorando nuevos sonidos y consolidando con el tiempo una identidad artística sólida y cada vez más personal.</p>
+            <p data-i18n="bio.p5">A lo largo de su recorrido, ha compartido cabina con artistas internacionales y nacionales como Adam Ten, Rafael Cerato, Pavel Petrov, Armina, Marcelo Vasami y Nicolás Rada, y se ha presentado en algunos de los venues y ciclos más relevantes de la escena electrónica local, entre ellos Río Electronic Music y Crobar.</p>
+        </div>
+        <dl class="facts reveal">
+          <div><dt data-i18n="bio.dl1">Géneros</dt><dd>Indie&nbsp;Dance&nbsp;· Melodic&nbsp;House&nbsp;· Deep&nbsp;House&nbsp;· Techno</dd></div>
+          <div><dt data-i18n="bio.dl2">Compartió cabina con</dt><dd>Adam&nbsp;Ten&nbsp;· Rafael&nbsp;Cerato&nbsp;· Pavel&nbsp;Petrov&nbsp;· Armina&nbsp;· Marcelo&nbsp;Vasami&nbsp;· Nicolás&nbsp;Rada</dd></div>
+          <div><dt data-i18n="bio.dl3">Se presentó en</dt><dd>Río&nbsp;Electronic&nbsp;Music&nbsp;· Crobar</dd></div>
+          <div><dt data-i18n="bio.dl4">Crew</dt><dd data-i18n="bio.crew">No Tempo, con Apste y Naive</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="fotos" id="fotos" tabindex="-1" data-haze="0.5" aria-labelledby="fotos-h">
+    <div class="wrap">
+      <div class="steps">
+        <header class="sec-head steps-head reveal">
+          <h2 class="title" id="fotos-h" style="--len:5.0" data-i18n="fotos.h">Fotos</h2>
+          <p class="tag" data-i18n="fotos.tag">9 fotos</p>
+          <p class="intro" data-i18n="fotos.intro">Tocá una foto para verla completa.</p>
+        </header>
+        <ul class="photo-grid" role="list">
+        <li class="tile">
+          <button class="photo" type="button" data-index="0" data-src="assets/img/cabina-laser-1600" data-w="1667" data-h="2500" aria-label="Ver foto completa: En cabina" data-i18n-attr="aria-label:ph1.aria">
+            <span class="frame veil" style="background-color:#152450"><picture><source type="image/avif" srcset="assets/img/cabina-laser-480.avif 480w, assets/img/cabina-laser-800.avif 800w, assets/img/cabina-laser-1200.avif 1200w, assets/img/cabina-laser-1600.avif 1600w" sizes="(min-width: 1440px) 420px, (min-width: 900px) 30vw, 46vw"><source type="image/webp" srcset="assets/img/cabina-laser-480.webp 480w, assets/img/cabina-laser-800.webp 800w, assets/img/cabina-laser-1200.webp 1200w, assets/img/cabina-laser-1600.webp 1600w" sizes="(min-width: 1440px) 420px, (min-width: 900px) 30vw, 46vw"><img src="assets/img/cabina-laser-800.jpg" srcset="assets/img/cabina-laser-480.jpg 480w, assets/img/cabina-laser-800.jpg 800w, assets/img/cabina-laser-1200.jpg 1200w, assets/img/cabina-laser-1600.jpg 1600w" sizes="(min-width: 1440px) 420px, (min-width: 900px) 30vw, 46vw" width="1667" height="2500" alt="ZZIANA de espaldas en la cabina, con el brazo en alto frente a los CDJ, mientras rayos láser azules cruzan sobre una pista llena" data-i18n-attr="alt:ph1.alt" loading="lazy" decoding="async" style="object-position:50% 58%"></picture></span>
+            <span class="cap" data-i18n="ph1.cap">En cabina</span>
+          </button>
+        </li>
+        <li class="tile">
+          <button class="photo" type="button" data-index="1" data-src="assets/img/estudio-corset-1600" data-w="4000" data-h="5000" aria-label="Ver foto completa: Retrato de estudio" data-i18n-attr="aria-label:ph2.aria">
+            <span class="frame veil" style="background-color:#342b29"><picture><source type="image/avif" srcset="assets/img/estudio-corset-480.avif 480w, assets/img/estudio-corset-800.avif 800w, assets/img/estudio-corset-1200.avif 1200w, assets/img/estudio-corset-1600.avif 1600w" sizes="(min-width: 1440px) 420px, (min-width: 900px) 30vw, 46vw"><source type="image/webp" srcset="assets/img/estudio-corset-480.webp 480w, assets/img/estudio-corset-800.webp 800w, assets/img/estudio-corset-1200.webp 1200w, assets/img/estudio-corset-1600.webp 1600w" sizes="(min-width: 1440px) 420px, (min-width: 900px) 30vw, 46vw"><img src="assets/img/estudio-corset-800.jpg" srcset="assets/img/estudio-corset-480.jpg 480w, assets/img/estudio-corset-800.jpg 800w, assets/img/estudio-corset-1200.jpg 1200w, assets/img/estudio-corset-1600.jpg 1600w" sizes="(min-width: 1440px) 420px, (min-width: 900px) 30vw, 46vw" width="4000" height="5000" alt="ZZIANA con corset de cuero negro, la mirada baja y el pelo largo sobre el hombro, en penumbra" data-i18n-attr="alt:ph2.alt" loading="lazy" decoding="async" style="object-position:68% 27%"></picture></span>
+            <span class="cap" data-i18n="ph2.cap">Retrato de estudio</span>
+          </button>
+        </li>
+        <li class="tile">
+          <button class="photo" type="button" data-index="2" data-src="assets/img/crobar-1080" data-w="1080" data-h="1620" aria-label="Ver foto completa: Crobar · 20 de julio" data-i18n-attr="aria-label:ph3.aria">
+            <span class="frame veil" style="background-color:#686868"><picture><source type="image/avif" srcset="assets/img/crobar-480.avif 480w, assets/img/crobar-800.avif 800w, assets/img/crobar-1080.avif 1080w" sizes="(min-width: 1440px) 420px, (min-width: 900px) 30vw, 46vw"><source type="image/webp" srcset="assets/img/crobar-480.webp 480w, assets/img/crobar-800.webp 800w, assets/img/crobar-1080.webp 1080w" sizes="(min-width: 1440px) 420px, (min-width: 900px) 30vw, 46vw"><img src="assets/img/crobar-800.jpg" srcset="assets/img/crobar-480.jpg 480w, assets/img/crobar-800.jpg 800w, assets/img/crobar-1080.jpg 1080w" sizes="(min-width: 1440px) 420px, (min-width: 900px) 30vw, 46vw" width="1080" height="1620" alt="ZZIANA en blanco y negro en la cabina de Crobar, con los ojos cerrados y una mano en los auriculares mientras mezcla" data-i18n-attr="alt:ph3.alt" loading="lazy" decoding="async" style="object-position:51% 47%"></picture></span>
+            <span class="cap" data-i18n="ph3.cap">Crobar&nbsp;· 20&nbsp;de&nbsp;julio</span>
+          </button>
+        </li>
+        <li class="tile">
+          <button class="photo" type="button" data-index="3" data-src="assets/img/exterior-escalera-1080" data-w="1080" data-h="1350" aria-label="Ver foto completa: Retrato en exteriores" data-i18n-attr="aria-label:ph4.aria">
+            <span class="frame veil" style="background-color:#302521"><picture><source type="image/avif" srcset="assets/img/exterior-escalera-480.avif 480w, assets/img/exterior-escalera-800.avif 800w, assets/img/exterior-escalera-1080.avif 1080w" sizes="(min-width: 1440px) 420px, (min-width: 900px) 30vw, 46vw"><source type="image/webp" srcset="assets/img/exterior-escalera-480.webp 480w, assets/img/exterior-escalera-800.webp 800w, assets/img/exterior-escalera-1080.webp 1080w" sizes="(min-width: 1440px) 420px, (min-width: 900px) 30vw, 46vw"><img src="assets/img/exterior-escalera-800.jpg" srcset="assets/img/exterior-escalera-480.jpg 480w, assets/img/exterior-escalera-800.jpg 800w, assets/img/exterior-escalera-1080.jpg 1080w" sizes="(min-width: 1440px) 420px, (min-width: 900px) 30vw, 46vw" width="1080" height="1350" alt="ZZIANA recostada sobre una escalera de hormigón, con remera estampada con carteles de neón, mirando a cámara" data-i18n-attr="alt:ph4.alt" loading="lazy" decoding="async" style="object-position:58% 28%"></picture></span>
+            <span class="cap" data-i18n="ph4.cap">Retrato en exteriores</span>
+          </button>
+        </li>
+        <li class="tile">
+          <button class="photo" type="button" data-index="4" data-src="assets/img/estudio-seguidor-1097" data-w="1097" data-h="1371" aria-label="Ver foto completa: Retrato de estudio" data-i18n-attr="aria-label:ph5.aria">
+            <span class="frame veil" style="background-color:#66635c"><picture><source type="image/avif" srcset="assets/img/estudio-seguidor-480.avif 480w, assets/img/estudio-seguidor-800.avif 800w, assets/img/estudio-seguidor-1097.avif 1097w" sizes="(min-width: 1440px) 420px, (min-width: 900px) 30vw, 46vw"><source type="image/webp" srcset="assets/img/estudio-seguidor-480.webp 480w, assets/img/estudio-seguidor-800.webp 800w, assets/img/estudio-seguidor-1097.webp 1097w" sizes="(min-width: 1440px) 420px, (min-width: 900px) 30vw, 46vw"><img src="assets/img/estudio-seguidor-800.jpg" srcset="assets/img/estudio-seguidor-480.jpg 480w, assets/img/estudio-seguidor-800.jpg 800w, assets/img/estudio-seguidor-1097.jpg 1097w" sizes="(min-width: 1440px) 420px, (min-width: 900px) 30vw, 46vw" width="1097" height="1371" alt="ZZIANA de cuerpo entero dentro del círculo de luz de un seguidor, con top estampado como un diario y pantalón negro" data-i18n-attr="alt:ph5.alt" loading="lazy" decoding="async" style="object-position:52% 30%"></picture></span>
+            <span class="cap" data-i18n="ph5.cap">Retrato de estudio</span>
+          </button>
+        </li>
+        <li class="tile">
+          <button class="photo" type="button" data-index="5" data-src="assets/img/cabina-neon-1600" data-w="1667" data-h="2500" aria-label="Ver foto completa: En cabina" data-i18n-attr="aria-label:ph6.aria">
+            <span class="frame veil" style="background-color:#352e3f"><picture><source type="image/avif" srcset="assets/img/cabina-neon-480.avif 480w, assets/img/cabina-neon-800.avif 800w, assets/img/cabina-neon-1200.avif 1200w, assets/img/cabina-neon-1600.avif 1600w" sizes="(min-width: 1440px) 420px, (min-width: 900px) 30vw, 46vw"><source type="image/webp" srcset="assets/img/cabina-neon-480.webp 480w, assets/img/cabina-neon-800.webp 800w, assets/img/cabina-neon-1200.webp 1200w, assets/img/cabina-neon-1600.webp 1600w" sizes="(min-width: 1440px) 420px, (min-width: 900px) 30vw, 46vw"><img src="assets/img/cabina-neon-800.jpg" srcset="assets/img/cabina-neon-480.jpg 480w, assets/img/cabina-neon-800.jpg 800w, assets/img/cabina-neon-1200.jpg 1200w, assets/img/cabina-neon-1600.jpg 1600w" sizes="(min-width: 1440px) 420px, (min-width: 900px) 30vw, 46vw" width="1667" height="2500" alt="ZZIANA mezclando con los ojos cerrados bajo un cartel de neón rojo que dice LU CAPEZZUOLI" data-i18n-attr="alt:ph6.alt" loading="lazy" decoding="async" style="object-position:46% 44%"></picture></span>
+            <span class="cap" data-i18n="ph6.cap">En cabina</span>
+          </button>
+        </li>
+        <li class="tile">
+          <button class="photo" type="button" data-index="6" data-src="assets/img/exterior-brutalista-1080" data-w="1080" data-h="1350" aria-label="Ver foto completa: Retrato en exteriores" data-i18n-attr="aria-label:ph7.aria">
+            <span class="frame veil" style="background-color:#55524a"><picture><source type="image/avif" srcset="assets/img/exterior-brutalista-480.avif 480w, assets/img/exterior-brutalista-800.avif 800w, assets/img/exterior-brutalista-1080.avif 1080w" sizes="(min-width: 1440px) 420px, (min-width: 900px) 30vw, 46vw"><source type="image/webp" srcset="assets/img/exterior-brutalista-480.webp 480w, assets/img/exterior-brutalista-800.webp 800w, assets/img/exterior-brutalista-1080.webp 1080w" sizes="(min-width: 1440px) 420px, (min-width: 900px) 30vw, 46vw"><img src="assets/img/exterior-brutalista-800.jpg" srcset="assets/img/exterior-brutalista-480.jpg 480w, assets/img/exterior-brutalista-800.jpg 800w, assets/img/exterior-brutalista-1080.jpg 1080w" sizes="(min-width: 1440px) 420px, (min-width: 900px) 30vw, 46vw" width="1080" height="1350" alt="ZZIANA subiendo una escalinata bajo un enorme edificio brutalista de hormigón" data-i18n-attr="alt:ph7.alt" loading="lazy" decoding="async" style="object-position:55% 57%"></picture></span>
+            <span class="cap" data-i18n="ph7.cap">Retrato en exteriores</span>
+          </button>
+        </li>
+        <li class="tile">
+          <button class="photo" type="button" data-index="7" data-src="assets/img/rio-cabina-roja-1600" data-w="1638" data-h="2048" aria-label="Ver foto completa: Río Electronic Music" data-i18n-attr="aria-label:ph8.aria">
+            <span class="frame veil" style="background-color:#360c18"><picture><source type="image/avif" srcset="assets/img/rio-cabina-roja-480.avif 480w, assets/img/rio-cabina-roja-800.avif 800w, assets/img/rio-cabina-roja-1200.avif 1200w, assets/img/rio-cabina-roja-1600.avif 1600w" sizes="(min-width: 1440px) 420px, (min-width: 900px) 30vw, 46vw"><source type="image/webp" srcset="assets/img/rio-cabina-roja-480.webp 480w, assets/img/rio-cabina-roja-800.webp 800w, assets/img/rio-cabina-roja-1200.webp 1200w, assets/img/rio-cabina-roja-1600.webp 1600w" sizes="(min-width: 1440px) 420px, (min-width: 900px) 30vw, 46vw"><img src="assets/img/rio-cabina-roja-800.jpg" srcset="assets/img/rio-cabina-roja-480.jpg 480w, assets/img/rio-cabina-roja-800.jpg 800w, assets/img/rio-cabina-roja-1200.jpg 1200w, assets/img/rio-cabina-roja-1600.jpg 1600w" sizes="(min-width: 1440px) 420px, (min-width: 900px) 30vw, 46vw" width="1638" height="2048" alt="ZZIANA de espaldas en la cabina de Río Electronic Music, con el dedo en alto hacia una pista bañada en luz roja y magenta" data-i18n-attr="alt:ph8.alt" loading="lazy" decoding="async" style="object-position:38% 52%"></picture></span>
+            <span class="cap" data-i18n="ph8.cap">Río Electronic Music</span>
+          </button>
+        </li>
+        <li class="tile">
+          <button class="photo" type="button" data-index="8" data-src="assets/img/estudio-blanco-1600" data-w="3008" data-h="4512" aria-label="Ver foto completa: Retrato de estudio" data-i18n-attr="aria-label:ph9.aria">
+            <span class="frame veil" style="background-color:#8d9097"><picture><source type="image/avif" srcset="assets/img/estudio-blanco-480.avif 480w, assets/img/estudio-blanco-800.avif 800w, assets/img/estudio-blanco-1200.avif 1200w, assets/img/estudio-blanco-1600.avif 1600w" sizes="(min-width: 1440px) 420px, (min-width: 900px) 30vw, 46vw"><source type="image/webp" srcset="assets/img/estudio-blanco-480.webp 480w, assets/img/estudio-blanco-800.webp 800w, assets/img/estudio-blanco-1200.webp 1200w, assets/img/estudio-blanco-1600.webp 1600w" sizes="(min-width: 1440px) 420px, (min-width: 900px) 30vw, 46vw"><img src="assets/img/estudio-blanco-800.jpg" srcset="assets/img/estudio-blanco-480.jpg 480w, assets/img/estudio-blanco-800.jpg 800w, assets/img/estudio-blanco-1200.jpg 1200w, assets/img/estudio-blanco-1600.jpg 1600w" sizes="(min-width: 1440px) 420px, (min-width: 900px) 30vw, 46vw" width="3008" height="4512" alt="ZZIANA con top blanco y pantalón de cuero negro, la mirada baja, sobre fondo gris claro" data-i18n-attr="alt:ph9.alt" loading="lazy" decoding="async" style="object-position:33% 24%"></picture></span>
+            <span class="cap" data-i18n="ph9.cap">Retrato de estudio</span>
+          </button>
+        </li>
+        </ul>
+      </div>
+    </div>
+    <dialog class="lightbox" aria-labelledby="lb-cap">
+      <div class="lb-inner">
+        <figure class="lb-fig">
+          <picture><source type="image/avif"><source type="image/webp"><img class="lb-img" alt="" width="1600" height="2000" decoding="async"></picture>
+          <figcaption><span class="lb-cap" id="lb-cap"></span><span class="lb-count"></span></figcaption>
+        </figure>
+        <div class="lb-ctrl">
+          <button class="btn btn-secondary lb-prev" type="button" data-i18n="lb.prev">Anterior</button>
+          <button class="btn btn-secondary lb-next" type="button" data-i18n="lb.next">Siguiente</button>
+          <button class="btn btn-primary lb-close" type="button" data-i18n="lb.close">Cerrar</button>
+        </div>
+      </div>
+    </dialog>
+  </section>
+
+  <section class="vivo" id="en-vivo" tabindex="-1" data-haze="0.75" aria-labelledby="vivo-h">
+    <div class="wrap">
+      <header class="sec-head reveal">
+        <h2 class="title" id="vivo-h" style="--len:6.4" data-i18n="vivo.h">En vivo</h2>
+        <p class="tag" data-i18n="vivo.tag">4 clips · sin sonido</p>
+      </header>
+    </div>
+    <div class="clips">
+      <ul class="strip" role="list">
+          <li class="reel" style="--avg:#1a143b">
+            <div class="reel-frame">
+              <picture><source type="image/avif" srcset="assets/video/reel-c09-poster.avif"><source type="image/webp" srcset="assets/video/reel-c09-poster.webp"><img class="reel-poster" src="assets/video/reel-c09-poster.jpg" width="540" height="960" alt="" loading="lazy" decoding="async"></picture><video muted playsinline loop preload="none" width="540" height="960" aria-label="Clip: ZZIANA de espaldas en la cabina de Río frente al público" data-i18n-attr="aria-label:r1.aria"><source src="assets/video/reel-c09.av1.mp4" type='video/mp4; codecs="av01.0.08M.08"'><source src="assets/video/reel-c09.h264.mp4" type='video/mp4; codecs="avc1.640028"'></video>
+              <button class="reel-toggle" type="button" data-i18n="clip.play">Reproducir clip</button>
+            </div>
+            <p class="reel-cap" data-i18n="r1.cap">Río&nbsp;Electronic&nbsp;Music&nbsp;· 10.05.2026</p>
+          </li>
+          <li class="reel" style="--avg:#1d271e">
+            <div class="reel-frame">
+              <picture><source type="image/avif" srcset="assets/video/reel-c16-poster.avif"><source type="image/webp" srcset="assets/video/reel-c16-poster.webp"><img class="reel-poster" src="assets/video/reel-c16-poster.jpg" width="540" height="960" alt="" loading="lazy" decoding="async"></picture><video muted playsinline loop preload="none" width="540" height="960" aria-label="Clip: ZZIANA con los brazos en alto en la cabina de Río, bajo el neón de Río" data-i18n-attr="aria-label:r2.aria"><source src="assets/video/reel-c16.av1.mp4" type='video/mp4; codecs="av01.0.08M.08"'><source src="assets/video/reel-c16.h264.mp4" type='video/mp4; codecs="avc1.640028"'></video>
+              <button class="reel-toggle" type="button" data-i18n="clip.play">Reproducir clip</button>
+            </div>
+            <p class="reel-cap" data-i18n="r2.cap">Río&nbsp;Electronic&nbsp;Music</p>
+          </li>
+          <li class="reel" style="--avg:#181e22">
+            <div class="reel-frame">
+              <picture><source type="image/avif" srcset="assets/video/reel-c13-poster.avif"><source type="image/webp" srcset="assets/video/reel-c13-poster.webp"><img class="reel-poster" src="assets/video/reel-c13-poster.jpg" width="540" height="960" alt="" loading="lazy" decoding="async"></picture><video muted playsinline loop preload="none" width="540" height="960" aria-label="Clip: ZZIANA de espaldas en la cabina frente a una multitud" data-i18n-attr="aria-label:r3.aria"><source src="assets/video/reel-c13.av1.mp4" type='video/mp4; codecs="av01.0.08M.08"'><source src="assets/video/reel-c13.h264.mp4" type='video/mp4; codecs="avc1.640028"'></video>
+              <button class="reel-toggle" type="button" data-i18n="clip.play">Reproducir clip</button>
+            </div>
+            <p class="reel-cap" data-i18n="r3.cap">Río&nbsp;Electronic&nbsp;Music</p>
+          </li>
+          <li class="reel" style="--avg:#171a46">
+            <div class="reel-frame">
+              <picture><source type="image/avif" srcset="assets/video/reel-c02-poster.avif"><source type="image/webp" srcset="assets/video/reel-c02-poster.webp"><img class="reel-poster" src="assets/video/reel-c02-poster.jpg" width="540" height="960" alt="" loading="lazy" decoding="async"></picture><video muted playsinline loop preload="none" width="540" height="960" aria-label="Clip: ZZIANA mezclando en B2B Studio con gente bailando detrás" data-i18n-attr="aria-label:r4.aria"><source src="assets/video/reel-c02.av1.mp4" type='video/mp4; codecs="av01.0.08M.08"'><source src="assets/video/reel-c02.h264.mp4" type='video/mp4; codecs="avc1.640028"'></video>
+              <button class="reel-toggle" type="button" data-i18n="clip.play">Reproducir clip</button>
+            </div>
+            <p class="reel-cap" data-i18n="r4.cap">No&nbsp;Tempo&nbsp;· B2B&nbsp;Studio</p>
+          </li>
+      </ul>
+      <p class="strip-count" aria-hidden="true"><span class="sc-n">1</span> / 4</p>
+    </div>
+    <div class="wrap film grid">
+      <div class="film-media" style="--avg:#1e1a0c">
+        <picture><source type="image/avif" srcset="assets/video/presskit-film-poster.avif 720w" sizes="(min-width: 900px) 30vw, 100vw"><source type="image/webp" srcset="assets/video/presskit-film-poster.webp 720w" sizes="(min-width: 900px) 30vw, 100vw"><img class="film-poster" src="assets/video/presskit-film-poster.jpg" srcset="assets/video/presskit-film-poster.jpg 720w" sizes="(min-width: 900px) 30vw, 100vw" width="720" height="1280" alt="" loading="lazy" decoding="async"></picture>
+      </div>
+      <div class="film-text reveal">
+        <p class="label" data-i18n="film.label">Presskit 2026 en video</p>
+        <p class="film-meta" data-i18n="film.meta">0:53 · con sonido</p>
+        <p class="film-copy" data-i18n="film.text">Una pieza de 53 segundos hecha para el presskit 2026: ZZIANA fuera de la cabina.</p>
+        <p class="vh" id="film-subs" data-i18n="film.subs">El video incluye subtítulos.</p>
+        <button class="btn btn-primary film-play" type="button" aria-describedby="film-subs"><span data-i18n="film.btn">Ver el video con sonido</span><svg class="ico play-ico" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 1.6 L10.6 6 L3 10.4Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="miter"/></svg></button>
+        <template class="film-tpl"><video controls autoplay playsinline width="720" height="1280" poster="assets/video/presskit-film-poster.avif" aria-describedby="film-subs"><source src="assets/video/presskit-film.av1.mp4" type='video/mp4; codecs="av01.0.08M.08"'><source src="assets/video/presskit-film.h264.mp4" type='video/mp4; codecs="avc1.640028"'></video></template>
+      </div>
+    </div>
+  </section>
+
+  <section class="notempo" id="no-tempo" tabindex="-1" data-haze="1" aria-labelledby="nt-h">
+    <div class="wrap grid">
+      <div class="nt-head reveal">
+        <h2 class="title" id="nt-h" style="--len:7.4" data-i18n="nt.h">No Tempo</h2>
+        <p class="names"><span>Apste</span><span aria-hidden="true">·</span><span>Naive</span><span aria-hidden="true">·</span><svg class="wm-inline" role="img" aria-label="ZZIANA" viewBox="0 0 1000 195.1"><use href="#wordmark"/></svg></p>
+      </div>
+      <div class="nt-body reveal">
+        <p data-i18n="nt.body">Crew y serie de sesiones fundada por Apste, Naive y ZZIANA. La Session #01 abrió la serie: se grabó en vivo en B2B Studio, Buenos Aires, con Poletti &amp; Santor como invitados.</p>
+        <div class="nt-links">
+          <a class="btn btn-primary watch-c" href="#set-c" data-i18n="nt.watch">Ver la Session #01</a>
+          <a class="link" href="https://www.instagram.com/notempo.crew/" target="_blank" rel="noopener"><span data-i18n="nt.ig">Seguir a No Tempo en Instagram</span><span aria-hidden="true"> ↗</span><span class="vh" data-i18n="ext.new">(se abre en otra pestaña)</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="booking" id="contratar" tabindex="-1" data-haze="0.45" aria-labelledby="bk-h">
+    <div class="booking-bg" aria-hidden="true"><div class="bk-photo veil" style="background-color:#163d29"><picture><source type="image/avif" srcset="assets/img/booking-bg-800.avif 800w, assets/img/booking-bg-1200.avif 1200w" sizes="100vw"><source type="image/webp" srcset="assets/img/booking-bg-800.webp 800w, assets/img/booking-bg-1200.webp 1200w" sizes="100vw"><img src="assets/img/booking-bg-1200.jpg" srcset="assets/img/booking-bg-800.jpg 800w, assets/img/booking-bg-1200.jpg 1200w" sizes="100vw" width="1407" height="2048" alt="" loading="lazy" decoding="async" style="object-position:47% 100%"></picture></div></div>
+    <div class="wrap">
+      <header class="sec-head reveal">
+        <h2 class="title" id="bk-h" style="--len:8.0" data-i18n="bk.h">Bookings</h2>
+        <p class="intro" data-i18n="bk.intro">Para fechas y propuestas, escribí por mail o por WhatsApp.</p>
+      </header>
+      <div class="contact reveal">
+        <a class="mail" href="mailto:zzianamusic@gmail.com">zzianamusic@gmail.com</a>
+        <div class="contact-row">
+          <button class="btn btn-secondary btn-sm copy-mail" type="button" data-i18n="bk.copy">Copiar mail</button>
+          <a class="phone" href="tel:+5491176346587">+54 9 11 7634-6587</a>
+        </div>
+      </div>
+      <div class="bk-btns reveal">
+        <a class="btn btn-primary" href="https://wa.me/5491176346587?text=Hola%20ZZIANA%2C%20te%20escribo%20por%20una%20fecha." target="_blank" rel="noopener" data-i18n-attr="href:bk.wa.href"><span data-i18n="bk.wa">Escribir por WhatsApp</span><span aria-hidden="true"> ↗</span><span class="vh" data-i18n="ext.new">(se abre en otra pestaña)</span></a>
+        <a class="btn btn-secondary" href="mailto:zzianamusic@gmail.com?subject=Booking%20ZZIANA" data-i18n="bk.mail">Mandar un mail</a>
+        <a class="btn btn-secondary" href="assets/presskit/ZZIANA-Presskit-2026.pdf" download data-i18n="bk.pk">Descargar presskit (PDF, 1,4 MB)</a>
+      </div>
+      <div class="bk-lower grid">
+        <div class="rider reveal">
+          <p class="label" data-i18n="rider.label">Rider técnico</p>
+          <ul class="rider-lines" role="list">
+            <li>3 × Pioneer CDJ&#8209;3000</li>
+            <li data-i18n="rider.mixer">Mixer: Pioneer DJM&#8209;V10 o Pioneer DJM&#8209;900NSX</li>
+          </ul>
+          <svg class="rider-draw" viewBox="0 0 392 124" aria-hidden="true" focusable="false">
+              <g fill="none" stroke="currentColor" stroke-width="1.5" vector-effect="non-scaling-stroke">
+                <rect pathLength="1" x="2" y="2" width="96" height="120"/><rect pathLength="1" x="22" y="10" width="56" height="16"/><circle pathLength="1" cx="50" cy="68" r="28"/>
+                <rect pathLength="1" x="110" y="2" width="64" height="120"/><path pathLength="1" d="M126 30 V104 M137.3 30 V104 M148.6 30 V104 M160 30 V104"/>
+                <rect pathLength="1" x="186" y="2" width="96" height="120"/><rect pathLength="1" x="206" y="10" width="56" height="16"/><circle pathLength="1" cx="234" cy="68" r="28"/>
+                <rect pathLength="1" x="294" y="2" width="96" height="120"/><rect pathLength="1" x="314" y="10" width="56" height="16"/><circle pathLength="1" cx="342" cy="68" r="28"/>
+              </g>
+            </svg>
+        </div>
+        <div class="socials reveal">
+          <p class="label" data-i18n="soc.label">Redes</p>
+          <ul role="list">
+            <li><a class="link" href="https://soundcloud.com/zzianamusic/" target="_blank" rel="noopener"><span data-i18n="soc.sc">SoundCloud</span><span aria-hidden="true"> ↗</span><span class="vh" data-i18n="ext.new">(se abre en otra pestaña)</span></a></li>
+            <li><a class="link" href="https://www.youtube.com/@ZZIANA" target="_blank" rel="noopener"><span data-i18n="soc.yt">YouTube</span><span aria-hidden="true"> ↗</span><span class="vh" data-i18n="ext.new">(se abre en otra pestaña)</span></a></li>
+            <li><a class="link" href="https://www.instagram.com/zziana___/" target="_blank" rel="noopener"><span data-i18n="soc.ig">Instagram</span><span aria-hidden="true"> ↗</span><span class="vh" data-i18n="ext.new">(se abre en otra pestaña)</span></a></li>
+            <li><a class="link" href="https://www.instagram.com/notempo.crew/" target="_blank" rel="noopener"><span data-i18n="soc.nt">No Tempo en Instagram</span><span aria-hidden="true"> ↗</span><span class="vh" data-i18n="ext.new">(se abre en otra pestaña)</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer" data-haze="0.3">
+  <div class="wrap foot-row">
+    <svg class="mono-sm" viewBox="0 0 1000 751.7" height="20" width="26.6" aria-hidden="true" focusable="false"><path fill="currentColor" fill-rule="evenodd" d="M443.2 751.6 L-0.0 751.5 L607.3 139.5 L485.4 139.4 L171.8 454.5 L171.7 89.7 L459.0 89.6 L547.8 0.5 L999.8 -0.0 L624.0 378.6 L392.6 612.4 L514.4 612.6 L827.9 298.2 L828.0 661.8 L534.7 661.9Z M423.2 702.2 L463.9 662.0 L273.7 661.8 L880.8 49.2 L576.6 49.3 L535.9 89.5 L726.1 89.7 L118.9 702.2Z M221.7 329.0 L409.7 139.5 L221.6 139.5Z M778.2 612.4 L778.2 417.5 L585.2 612.4Z"/></svg>
+    <p class="foot-line" data-i18n="ft.line">ZZIANA&nbsp;· Buenos&nbsp;Aires&nbsp;· ©&nbsp;2026</p>
+    <div class="lang" role="group" aria-label="Idioma" data-i18n-attr="aria-label:lang.group">
+      <button class="lang-btn" type="button" data-lang="es" aria-pressed="true" aria-label="Ver el sitio en español" data-i18n-attr="aria-label:lang.es">ES</button><span aria-hidden="true">·</span><button class="lang-btn" type="button" data-lang="en" aria-pressed="false" aria-label="Ver el sitio en inglés" data-i18n-attr="aria-label:lang.en">EN</button>
+    </div>
+    <a class="link back-top" href="#top" data-i18n="ft.top">Volver arriba</a>
+  </div>
+</footer>
+
+<canvas class="bg" aria-hidden="true"></canvas>
+<p class="toast" role="status"></p>
+
+<script type="application/json" id="i18n-es">{
+ "setA.iframe": "ZZIANA — Apertura para Pavel Petrov (YouTube)",
+ "setB.iframe": "ZZIANA — Apertura para Rafael Cerato (YouTube)",
+ "setC.iframe": "ZZIANA — No Tempo Session #01 (YouTube)",
+ "clip.pause": "Pausar clip",
+ "clip.play": "Reproducir clip",
+ "video.play": "Reproducir video",
+ "video.pause": "Pausar video",
+ "set.close": "Cerrar el reproductor",
+ "set.nowplaying": "Reproduciendo: ",
+ "tl.hide": "Ocultar tracklist",
+ "bk.copied": "Mail copiado",
+ "setA.title": "Apertura para Pavel Petrov",
+ "setB.title": "Apertura para Rafael Cerato",
+ "setC.title": "No Tempo Session #01",
+ "prop.tag": "Propuesta",
+ "prop.tag2": " · borrador"
+}</script>
+<script type="application/json" id="i18n-en">{
+ "ext.new": "(opens in a new tab)",
+ "setA.alt": "ZZIANA mixing in the Río Electronic Music booth under green lights and screens, with decorative flamingos",
+ "setA.play": "Listen to the set: Opening set for Pavel Petrov",
+ "setA.iframe": "ZZIANA — Opening set for Pavel Petrov (YouTube)",
+ "setA.tl": "Show tracklist · 13 tracks",
+ "setA.eyebrow": "Río Electronic Music · Buenos Aires · January 2026",
+ "setA.title": "Opening set for Pavel Petrov",
+ "setA.meta": "13 tracks · Indie Dance & Melodic House",
+ "setA.note": "Published on the No Tempo channel",
+ "set.yt": "Open on YouTube",
+ "setB.alt": "ZZIANA with her eyes closed behind a booth covered in roses, under blue neon light",
+ "setB.play": "Listen to the set: Opening set for Rafael Cerato",
+ "setB.iframe": "ZZIANA — Opening set for Rafael Cerato (YouTube)",
+ "setB.tl": "Show tracklist · 15 tracks",
+ "setB.eyebrow": "Río Electronic Music · Buenos Aires · 10 May 2026",
+ "setB.title": "Opening set for Rafael Cerato",
+ "setB.meta": "15 tracks · Indie Dance & Melodic House",
+ "setB.note": "Published on ZZIANA's channel",
+ "setC.alt": "ZZIANA at the CDJs in a blue-lit studio, with people dancing behind her",
+ "setC.play": "Listen to the set: No Tempo Session #01",
+ "setC.iframe": "ZZIANA — No Tempo Session #01 (YouTube)",
+ "setC.tl": "Show tracklist · 17 tracks",
+ "setC.eyebrow": "No Tempo · B2B Studio · Buenos Aires",
+ "setC.title": "No Tempo Session #01",
+ "setC.meta": "17 tracks · Recorded live",
+ "setC.note": "Published on the No Tempo channel",
+ "set.listen": "Listen to the set",
+ "set.now": "Now playing",
+ "ph1.alt": "ZZIANA seen from behind in the booth, arm raised over the CDJs as blue laser beams cut across a packed dance floor",
+ "ph1.cap": "In the booth",
+ "ph1.aria": "View full photo: In the booth",
+ "ph2.alt": "ZZIANA in a black leather corset, gaze lowered and long hair over one shoulder, in low light",
+ "ph2.cap": "Studio portrait",
+ "ph2.aria": "View full photo: Studio portrait",
+ "ph3.alt": "Black-and-white shot of ZZIANA in the Crobar booth, eyes closed, one hand on her headphones while she mixes",
+ "ph3.cap": "Crobar · 20 July",
+ "ph3.aria": "View full photo: Crobar · 20 July",
+ "ph4.alt": "ZZIANA reclining on concrete steps in a top printed with neon-sign graphics, looking into the camera",
+ "ph4.cap": "Outdoor portrait",
+ "ph4.aria": "View full photo: Outdoor portrait",
+ "ph5.alt": "Full-length shot of ZZIANA inside a follow-spot circle, in a newspaper-print top and black trousers",
+ "ph5.cap": "Studio portrait",
+ "ph5.aria": "View full photo: Studio portrait",
+ "ph6.alt": "ZZIANA mixing with her eyes closed beneath a red neon sign reading LU CAPEZZUOLI",
+ "ph6.cap": "In the booth",
+ "ph6.aria": "View full photo: In the booth",
+ "ph7.alt": "ZZIANA walking up concrete steps beneath a massive brutalist building",
+ "ph7.cap": "Outdoor portrait",
+ "ph7.aria": "View full photo: Outdoor portrait",
+ "ph8.alt": "ZZIANA from behind in the Río Electronic Music booth, pointing up toward a dance floor bathed in red and magenta light",
+ "ph8.cap": "Río Electronic Music",
+ "ph8.aria": "View full photo: Río Electronic Music",
+ "ph9.alt": "ZZIANA in a white top and black leather trousers, gaze lowered, against a light grey backdrop",
+ "ph9.cap": "Studio portrait",
+ "ph9.aria": "View full photo: Studio portrait",
+ "r1.aria": "Clip: ZZIANA from behind in the Río booth facing the crowd",
+ "r1.cap": "Río Electronic Music · 10 May 2026",
+ "r2.aria": "Clip: ZZIANA with her arms up in the Río booth under the Río neon",
+ "r2.cap": "Río Electronic Music",
+ "r3.aria": "Clip: ZZIANA from behind in the booth facing a crowd",
+ "r3.cap": "Río Electronic Music",
+ "r4.aria": "Clip: ZZIANA mixing at B2B Studio with people dancing behind her",
+ "r4.cap": "No Tempo · B2B Studio",
+ "clip.play": "Play clip",
+ "clip.pause": "Pause clip",
+ "bio.p1": "Through a multifaceted artistic approach, her sets are born from sensitivity, intuition and the desire to build real moments, where energy, groove and emotion can coexist naturally.",
+ "bio.p2": "Her musical universe runs through different shades of Indie Dance, Melodic House, Deep House and Techno, moving freely between influences and genres without losing her identity. Musical curiosity and a constant interest in discovering new artists, scenes and sounds keep enriching her artistic universe and go hand in hand with a project in constant expansion.",
+ "bio.p3": "Influenced by the most hypnotic and emotional side of club culture, she builds sessions with a progressive dynamic where deep atmospheres, enveloping melodies and productions with a strong sonic identity coexist, always keeping a genuine connection with the energy of the dance floor.",
+ "bio.p4": "This way of building and sharing her musical journeys has led her to constant learning, exploring new sounds and, over time, consolidating a solid and increasingly personal artistic identity.",
+ "bio.p5": "Throughout her career she has shared the booth with international and national artists such as Adam Ten, Rafael Cerato, Pavel Petrov, Armina, Marcelo Vasami and Nicolás Rada, and has played at some of the most relevant venues and series of the local electronic scene, among them Río Electronic Music and Crobar.",
+ "meta.title": "ZZIANA · DJ from Buenos Aires",
+ "meta.desc": "ZZIANA (Luciana Capezzuoli) is a DJ from Buenos Aires: Indie Dance, Melodic House, Deep House and Techno. Full sets, bio, photos and booking contact.",
+ "video.play": "Play video",
+ "video.pause": "Pause video",
+ "set.close": "Close the player",
+ "set.nowplaying": "Now playing: ",
+ "tl.hide": "Hide tracklist",
+ "bk.copied": "Email copied",
+ "bk.wa.href": "https://wa.me/5491176346587?text=Hi%20ZZIANA%2C%20I%27m%20writing%20about%20a%20date.",
+ "skip": "Skip to content",
+ "nav.sets": "Sets",
+ "nav.bio": "Bio",
+ "nav.fotos": "Photos",
+ "nav.vivo": "Live",
+ "nav.nt": "No Tempo",
+ "nav.book": "Bookings",
+ "nav.menu": "Menu",
+ "nav.close": "Close",
+ "hero.dj": "DJ · Buenos Aires",
+ "hero.genres": "Indie Dance · Melodic House · Deep House · Techno",
+ "hero.cta": "Listen to the sets",
+ "hero.caption": "Río Electronic Music · Buenos Aires",
+ "sets.h": "Sets",
+ "sets.tag": "3 sets · 3:18:38",
+ "sets.intro": "Three full sets, recorded live: two opening sets at Río Electronic Music and the first No Tempo Session.",
+ "bio.h": "Biography",
+ "bio.lead": "ZZIANA (Luciana Capezzuoli) is a DJ from Buenos Aires who lives music as a form of connection, expression and encounter on the dance floor.",
+ "bio.dl1": "Genres",
+ "bio.dl2": "Shared the booth with",
+ "bio.dl3": "Played at",
+ "bio.dl4": "Crew",
+ "bio.crew": "No Tempo, with Apste and Naive",
+ "fotos.h": "Photos",
+ "fotos.tag": "9 photos",
+ "fotos.intro": "Tap a photo to see it full size.",
+ "lb.prev": "Previous",
+ "lb.next": "Next",
+ "lb.close": "Close",
+ "vivo.h": "Live",
+ "vivo.tag": "4 clips · no sound",
+ "film.label": "Press kit 2026, the video",
+ "film.meta": "0:53 · with sound",
+ "film.text": "A 53-second piece made for the 2026 press kit: ZZIANA away from the booth.",
+ "film.subs": "The video has burned-in subtitles.",
+ "film.btn": "Watch with sound",
+ "nt.h": "No Tempo",
+ "nt.body": "A crew and session series founded by Apste, Naive and ZZIANA. Session #01 opened the series: it was recorded live at B2B Studio, Buenos Aires, with guests Poletti & Santor.",
+ "nt.watch": "Watch Session #01",
+ "nt.ig": "Follow No Tempo on Instagram",
+ "bk.h": "Bookings",
+ "bk.intro": "For dates and offers, write by email or WhatsApp.",
+ "bk.copy": "Copy email",
+ "bk.wa": "Message on WhatsApp",
+ "bk.mail": "Send an email",
+ "bk.pk": "Download press kit (PDF, 1.4 MB)",
+ "rider.label": "Technical rider",
+ "rider.mixer": "Mixer: Pioneer DJM‑V10 or Pioneer DJM‑900NSX",
+ "soc.label": "Socials",
+ "soc.sc": "SoundCloud",
+ "soc.yt": "YouTube",
+ "soc.ig": "Instagram",
+ "soc.nt": "No Tempo on Instagram",
+ "ft.line": "ZZIANA · Buenos Aires · © 2026",
+ "ft.top": "Back to top",
+ "nav.home": "ZZIANA, home",
+ "nav.label": "Sections",
+ "lang.group": "Language",
+ "lang.es": "View the site in Spanish",
+ "lang.en": "View the site in English",
+ "bio.alt": "Close-up of ZZIANA looking over her shoulder in a black leather jacket against a red backdrop",
+ "prop.tag": "Proposal",
+ "prop.tag2": " · draft"
+}</script>
+</body>
+</html>
