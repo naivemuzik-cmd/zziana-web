@@ -12,7 +12,6 @@
 @font-face { font-family: "Martian Mono Fallback"; src: local("Consolas"), local("Cascadia Mono"), local("Courier New"); size-adjust: 127%; ascent-override: 79%; descent-override: 16%; line-gap-override: 0%; }
 
 /* ---------- propiedades animables ---------- */
-@property --tri { syntax: "<number>"; inherits: true; initial-value: 0; }
 @property --veil { syntax: "<number>"; inherits: false; initial-value: 0; }
 
 /* ---------- tokens ---------- */
@@ -158,6 +157,8 @@ canvas.bg { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -1; p
 .sec-head .title:has(+ .intro) { grid-column: 1 / -1; }
 .sec-head .intro { grid-column: 1 / -1; }
 .sec-head .tag { white-space: nowrap; }
+/* columna angosta: la etiqueta baja debajo del título ("4 CLIPS · SIN SONIDO" no entraba al lado a 390 px) */
+@container (max-width: 440px) { .sec-head > .tag { grid-column: 1 / -1; margin-top: calc(-1 * var(--s-2)); } }
 
 /* ---------- enlaces y botones ---------- */
 .link {
@@ -341,18 +342,33 @@ canvas.bg { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -1; p
   .hero-meta { gap: var(--s-2); }
 }
 
-/* ---------- SETS ---------- */
+/* ---------- SETS: pantallas vivas (§19.5) ---------- */
+/* Base (sin JS, movimiento reducido y celular): una tarjeta debajo de otra. Escritorio con movimiento:
+   tarjetas fijas apiladas, la siguiente sube y tapa a la anterior (que se achica y se oscurece). */
 .sets { position: relative; z-index: 2; padding-block: var(--section); }
 /* con la escena activa, los sets suben sobre el final del video */
 .js-motion .sets {
   margin-top: -40svh; padding-top: calc(14svh + var(--s-6));
   background: linear-gradient(to bottom, transparent 0, rgb(5 6 10 / .75) 8svh, var(--negro) 18svh, var(--negro) 40svh, transparent 70svh) top / 100% 70svh no-repeat;
 }
+/* hasta que ScrollTrigger arma el recorrido del hero (motion.js pone .st-ready) los sets no se muestran:
+   si no, asoman al pie del hero durante la carga y saltan (CLS) */
+.js-motion:not(.st-ready) .sets { visibility: hidden; }
+.sets .mq-a { margin-bottom: var(--s-8); }
 .set-list { display: grid; }
-.set { container-type: inline-size; padding-block: var(--s-8); }
-.set + .set { border-top: 1px solid var(--rule); }
-.set:first-child { padding-top: 0; }
-.set-in { display: grid; gap: var(--s-4); --th: 72px; }
+.flow-mark { display: block; height: 0; }
+.set {
+  container-type: inline-size; position: relative; isolation: isolate;
+  padding-block: var(--s-8); padding-inline: max(var(--margin), calc((100% - 1440px) / 2 + var(--margin)));
+}
+article.set:nth-of-type(n + 2) { border-top: 1px solid var(--rule); }
+article.set:first-of-type { padding-top: 0; }
+.set-in { position: relative; display: grid; gap: var(--s-4); --th: 84px; }
+.set-idx {
+  font-family: var(--f-mono); font-weight: 500; font-size: var(--t-label); font-stretch: 112.5%;
+  letter-spacing: var(--track-mono); color: var(--hielo); font-variant-numeric: tabular-nums; line-height: 1.6;
+}
+.set-idx span { color: var(--ceniza); }
 .set .eyebrow { display: flex; flex-wrap: wrap; gap: var(--s-3); }
 .set .now { color: var(--luz); display: inline-flex; align-items: center; gap: 8px; }
 /* "Reproduciendo": LED de láser encendido */
@@ -397,48 +413,44 @@ canvas.bg { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -1; p
 .set-ctrl { display: flex; flex-direction: column; align-items: stretch; gap: var(--s-4); margin-top: var(--s-2); }
 .set-ctrl .link { align-self: flex-start; display: inline-flex; align-items: center; min-height: 44px; font-size: 1rem; }
 
+/* la pantalla: miniatura a brillo completo (sin filtro ni viñeta) y encima la vista previa muda */
 .media-slot { position: relative; aspect-ratio: 16 / 9; background: var(--avg, var(--humo)); }
+/* con la apertura triangular, la pantalla cerrada es negro (no un bloque del color promedio) */
+.js-motion .media-slot { background: transparent; }
 .facade { position: absolute; inset: 0; overflow: hidden; }
-/* miniatura en sus colores reales: sólo con la luz baja (brillo .68). Hover o foco: sube a 1 y escala 1,02.
-   (Estas transiciones son CSS; GSAP no anima estos transform.) */
-.facade > picture img, .tri-img {
-  width: 100%; height: 100%; object-fit: cover;
-  transition: filter 380ms var(--ease-tri), scale 380ms var(--ease-tri);
+.ap { position: absolute; inset: 0; }
+.ap img, .prev { display: block; width: 100%; height: 100%; object-fit: cover; }
+#set-a .ap img { object-view-box: inset(6% 0 0 0); }
+/* hover o foco SOBRE LA PANTALLA (no sobre toda la tarjeta): la imagen se acerca apenas (transición CSS;
+   GSAP no anima este transform) */
+.ap picture img { transition: scale 700ms var(--ease-tri); }
+.media-slot:hover .ap picture img, .set:has(.play:focus-visible) .ap picture img { scale: 1.03; }
+.prev { position: absolute; inset: 0; opacity: 0; transition: opacity 450ms var(--ease-veil); }
+.set.prev-on .prev { opacity: 1; }
+/* borde de láser de la apertura triangular (lo dibuja motion.triReveal) */
+/* el triángulo crece más allá del marco al abrirse: el borde se recorta al marco */
+.tri-edge { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 3; pointer-events: none; overflow: hidden; }
+.tri-edge polygon {
+  fill: none; stroke: var(--laser); stroke-width: 1.5px; vector-effect: non-scaling-stroke; stroke-linejoin: miter;
+  filter: drop-shadow(0 0 6px rgb(62 107 255 / .9));
 }
-.facade > picture img { filter: brightness(.68); }
-#set-a .facade img { object-view-box: inset(6% 0 0 0); }
-.set:hover .facade img, .set:has(.play:focus-visible) .facade img { scale: 1.02; }
-.set:hover .facade > picture img, .set:has(.play:focus-visible) .facade > picture img { filter: brightness(1); }
-/* viñeta suave en los bordes (negro de 0 a 45 %) y el pie que se funde con la página */
-.facade::before {
-  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
-  background:
-    linear-gradient(to top, rgb(5 6 10 / .7), transparent 30%),
-    radial-gradient(120% 120% at 50% 50%, transparent 45%, rgb(5 6 10 / .45) 100%);
-}
-.play {
-  position: absolute; inset: 0; z-index: 2; padding: 0; border: 0; background: none; cursor: pointer;
-  transition: --tri 380ms var(--ease-tri);
-}
+.play { position: absolute; inset: 0; z-index: 2; padding: 0; border: 0; background: none; cursor: pointer; }
 /* el halo va hacia adentro: .facade recorta lo que sobresale */
 .play:focus-visible { outline-offset: -5px; box-shadow: inset 0 0 0 6px rgb(62 107 255 / .55); }
-/* el triángulo es una ventana de luz: adentro, la misma imagen a brillo 1 */
-.tri-img {
-  position: absolute; inset: 0;
-  --r: calc(var(--th) * .1586 * var(--tri));
-  clip-path: polygon(calc(50% + 2 * var(--r)) 50%, calc(50% - var(--r)) calc(50% - 1.7321 * var(--r)), calc(50% - var(--r)) calc(50% + 1.7321 * var(--r)));
-}
+/* play: un triángulo grande en contorno de láser que se dibuja al entrar y se rellena en hover */
 .tri {
   position: absolute; width: calc(var(--th) * .875); height: var(--th);
-  left: calc(50% - var(--th) * .2917); top: calc(50% - var(--th) * .5);
-  overflow: visible;
+  left: calc(50% - var(--th) * .2917); top: calc(50% - var(--th) * .5); overflow: visible;
+  filter: drop-shadow(0 0 10px rgb(62 107 255 / .7)) drop-shadow(0 1px 3px rgb(5 6 10 / .55));
 }
-.tri { filter: drop-shadow(0 0 6px rgb(62 107 255 / .7)); }
-.tri path { fill: none; stroke: var(--laser); stroke-width: 12.48; stroke-linejoin: miter; }
-.set:hover .play, .set:has(:focus-visible) .play { --tri: 1; }
-@media (hover: none) { .play { --tri: 1; } }
+/* el relleno nunca tapa la imagen quieta (lo que Mauro no quería): sólo sobre la pantalla misma, cuando ya
+   corre la vista previa, y translúcido, con el contorno encendido; el triángulo crece apenas */
+.tri { transition: scale 420ms var(--ease-tri); }
+.tri path { fill: rgb(62 107 255 / 0); stroke: var(--laser); stroke-width: 2.6; stroke-linejoin: miter; transition: fill 320ms var(--ease-tri), stroke 320ms var(--ease-tri); }
+.media-slot:hover .tri, .play:focus-visible .tri { scale: 1.08; }
+.media-slot:hover .tri path, .play:focus-visible .tri path { fill: rgb(62 107 255 / .3); stroke: var(--hielo); }
 .js-motion .set:not(.drawn) .tri path { stroke-dasharray: 1; stroke-dashoffset: 1; }
-.js-motion .set.drawing .tri path { stroke-dasharray: 1; stroke-dashoffset: 0; transition: stroke-dashoffset 600ms var(--ease-veil); }
+.js-motion .set.drawing .tri path { stroke-dasharray: 1; stroke-dashoffset: 0; transition: stroke-dashoffset 900ms var(--ease-veil), fill 320ms var(--ease-tri), stroke 320ms var(--ease-tri); }
 
 .player { position: absolute; inset: 0; background: #000; }
 .player iframe { width: 100%; height: 100%; border: 0; display: block; }
@@ -455,7 +467,7 @@ canvas.bg { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -1; p
 .tracklist summary:hover { color: var(--hielo); }
 .tracklist .tri-ico { width: 12px; height: 12px; color: var(--hielo); transition: rotate 220ms var(--ease-veil); }
 .tracklist[open] .tri-ico { rotate: 90deg; }
-.tl-panel { background: rgb(14 17 24 / .92); border-top: 1px solid var(--rule); padding: var(--s-5); margin-top: var(--s-3); content-visibility: auto; contain-intrinsic-size: auto 420px; }
+.tl-panel { background: rgb(14 17 24 / .92); border-top: 1px solid var(--rule); padding: var(--s-5); margin-top: var(--s-3); }
 .tracklist-list {
   font-family: var(--f-mono); font-size: var(--t-small); line-height: 1.6; color: var(--ceniza);
   font-variant-numeric: tabular-nums; padding-left: 3.4ch; margin: 0;
@@ -471,10 +483,11 @@ canvas.bg { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -1; p
 
 @container (min-width: 720px) {
   .set-in {
-    --th: 96px;
-    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-    column-gap: var(--gutter); row-gap: 0;
+    --th: 104px;
+    grid-template-columns: minmax(0, 62fr) minmax(0, 38fr);
+    column-gap: calc(var(--gutter) * 2); row-gap: 0;
     grid-template-areas:
+      "media idx"
       "media eyebrow"
       "media title"
       "media dur"
@@ -482,9 +495,10 @@ canvas.bg { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -1; p
       "media note"
       "media ctrl"
       "tl tl";
-    grid-template-rows: auto auto auto auto auto 1fr auto;
+    grid-template-rows: auto auto auto auto auto auto 1fr auto;
   }
-  .set .eyebrow { grid-area: eyebrow; }
+  .set-idx { grid-area: idx; }
+  .set .eyebrow { grid-area: eyebrow; margin-top: var(--s-2); }
   .media-slot { grid-area: media; align-self: start; }
   .set-title { grid-area: title; margin-top: var(--s-4); min-height: 2lh; }
   .dur { grid-area: dur; margin-top: var(--s-5); }
@@ -498,32 +512,210 @@ canvas.bg { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -1; p
   .tracklist-list { columns: 2; column-gap: var(--s-8); }
 }
 
-/* ---------- BIO ---------- */
-.bio { padding-block: var(--section); }
-.bio-grid { container-type: inline-size; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: var(--s-7); }
-.bio-grid > * { grid-column: 1 / -1; }
-.portrait .frame { position: relative; display: block; aspect-ratio: 4 / 5; max-width: 600px; overflow: hidden; }
-.portrait img { width: 100%; height: 100%; object-fit: cover; object-position: 35% 18%; }
-.bio-text { display: grid; gap: var(--s-7); }
-.bio-cols { display: grid; gap: var(--s-5); max-width: 62ch; text-wrap: pretty; }
-.facts { border-top: 1px solid var(--rule); padding-top: var(--s-6); display: grid; gap: var(--s-5); }
-.facts div { display: grid; gap: var(--s-1); }
-.facts dt { font-family: var(--f-mono); font-weight: 500; font-size: var(--t-label); text-transform: uppercase; letter-spacing: var(--track-mono); color: var(--hielo); line-height: 1.6; }
-.facts dd { color: var(--luz); font-weight: 400; font-size: 1rem; line-height: 1.5; }
+/* escritorio con movimiento: tarjetas fijas apiladas, cada una ocupa la pantalla */
 @media (min-width: 900px) {
-  .bio-grid > .title { grid-column: 6 / -1; grid-row: 1; --span: .56; }
-  .portrait { grid-column: 1 / 6; grid-row: 1 / span 2; position: sticky; top: 96px; align-self: start; }
-  .bio-text { grid-column: 6 / -1; grid-row: 2; }
-  .facts div { grid-template-columns: minmax(0, 15ch) minmax(0, 1fr); column-gap: var(--s-5); align-items: baseline; }
+  .js-motion .set-list { display: block; }
+  .js-motion .set {
+    /* --h (alto real, lo pone sets.js): si la tarjeta no entra en la pantalla, se fija recién al ver su final */
+    position: sticky; top: min(0px, 100svh - var(--h, 100svh));
+    min-height: 100svh; display: grid; align-content: center;
+    padding-block: calc(64px + var(--s-6)) var(--s-7);
+    background: radial-gradient(60% 70% at 24% 45%, rgb(20 26 92 / .38), transparent 70%), var(--negro);
+    border-top: 1px solid var(--rule);
+  }
+  /* la primera no tapa a nadie: transparente, así no corta el humo del fondo */
+  .js-motion article.set:first-of-type { padding-top: calc(64px + var(--s-6)); border-top-color: transparent; background: none; }
+  /* número gigante en contorno, abajo a la derecha, recortado por la tarjeta (decorativo) */
+  .js-motion .set-list { counter-reset: set; }
+  .js-motion article.set { counter-increment: set; overflow: clip; }
+  .js-motion article.set::before {
+    content: counter(set, decimal-leading-zero) / ""; position: absolute; z-index: -1; pointer-events: none;
+    right: max(var(--margin), calc((100% - 1440px) / 2 + var(--margin))); bottom: -.2em;
+    font-family: var(--f-display); font-weight: 800; font-stretch: 125%; font-size: min(38svh, 22vw); line-height: 1;
+    color: transparent; -webkit-text-stroke: 1px rgb(62 107 255 / .22);
+  }
+  /* la tarjeta tapada se oscurece (--shade lo anima sets.js) */
+  .js-motion .set::after {
+    content: ""; position: absolute; inset: 0; z-index: 6; pointer-events: none;
+    background: var(--negro); opacity: var(--shade, 0);
+  }
+  .js-motion .set-in {
+    --dur-s: clamp(3rem, 1.4rem + 4.4vw, 6rem);
+    grid-template-areas: "media idx" "media eyebrow" "media title" "media dur" "media meta" "media note" "media ctrl" "media tl";
+    grid-template-rows: auto auto auto auto auto auto auto 1fr;
+    transform-origin: 50% 30%;
+  }
+  .js-motion .set .dur { font-size: var(--dur-s); }
+  .js-motion .set .tracklist { margin-top: var(--s-4); }
+  /* sin aire muerto entre la última tarjeta y la bio: la sección termina con la pila, que se funde en el
+     humo por abajo (sin el corte recto de los fondos opacos; las tarjetas tapadas siguen fijas detrás de la
+     última, por eso la máscara va en la lista y no en la tarjeta) */
+  .js-motion .sets { padding-bottom: 0; }
+  .js-motion .set-list {
+    -webkit-mask: linear-gradient(#000 calc(100% - 18svh), transparent); mask: linear-gradient(#000 calc(100% - 18svh), transparent);
+  }
+  /* el tracklist se abre como una pantalla sobre el video (la tarjeta no cambia de alto) */
+  .js-motion .set .tl-panel {
+    position: absolute; left: 0; top: 0; z-index: 4; margin: 0;
+    width: calc((100% - var(--gutter) * 2) * var(--mf, .62)); aspect-ratio: 16 / 9; overflow-y: auto; overscroll-behavior: auto;
+    background: rgb(5 6 10 / .9); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+    border: 1px solid var(--rule); border-top: 1px solid var(--laser);
+    scrollbar-width: thin; scrollbar-color: var(--laser) transparent;
+  }
+  .js-motion .set .tracklist-list { columns: 2; column-gap: var(--s-7); }
 }
-@media (min-width: 1100px) {
-  .bio-cols { display: block; columns: 2; column-gap: var(--gutter); max-width: none; }
+/* pantallas anchas: la pantalla del set crece (sin el tope de 1440 y con más columna para el video) */
+@media (min-width: 1600px) {
+  .js-motion .set { padding-inline: max(var(--margin), calc((100% - 1920px) / 2 + var(--margin))); }
+  .js-motion .set-in { --mf: .66; grid-template-columns: minmax(0, 66fr) minmax(0, 34fr); }
+  .js-motion article.set::before { right: max(var(--margin), calc((100% - 1920px) / 2 + var(--margin))); }
+}
+
+/* ---------- BIO: escena con máscara triangular (§19.6) ---------- */
+.bio { position: relative; padding-block: var(--section); }
+.bio-stage {
+  width: min(100% - 2 * var(--margin), 1440px - 2 * var(--margin)); margin-inline: auto;
+  display: grid; gap: var(--s-7); align-content: center;
+}
+.bio-pics { position: relative; --pw: 100%; padding-bottom: 18%; }
+.bio-portrait { position: relative; width: var(--pw); }
+.bp-frame { position: relative; display: block; aspect-ratio: 4 / 5; overflow: hidden; }
+/* la cara queda al centro del recorte: la apertura arranca justo ahí. El zoom se ancla abajo (sobre ella),
+   así la pared vacía de arriba sale del cuadro */
+.bp-frame img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 100%; transform-origin: 50% 74%; }
+/* la pared gris del estudio se lleva al subsuelo: más oscura y algo desaturada (sin teñir, §18.2) y con la luz
+   que sube desde abajo: los bordes caen a --negro */
+.bp-img { filter: brightness(.8) contrast(1.1) saturate(.82); }
+.bp-frame::after {
+  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background:
+    linear-gradient(to bottom, rgb(5 6 10 / .62) 0, rgb(5 6 10 / .18) 34%, transparent 52%),
+    linear-gradient(to top, rgb(5 6 10 / .7) 0, transparent 24%),
+    linear-gradient(to right, rgb(5 6 10 / .45) 0, transparent 30%, transparent 72%, rgb(5 6 10 / .35));
+}
+/* celular: la foto en vivo sale un poco del retrato (dentro del margen: sin desborde) */
+.bio-live { position: absolute; right: -4%; bottom: 0; width: 44%; z-index: 2; }
+.bl-frame {
+  display: block; aspect-ratio: 3 / 4; overflow: hidden;
+  outline: 1px solid var(--laser); outline-offset: 0;
+  box-shadow: 0 0 22px 0 rgb(62 107 255 / .35), 0 28px 60px rgb(0 0 0 / .55);
+}
+.bl-frame img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 58%; }
+.bio-copy { display: grid; gap: var(--s-6); align-content: center; container-type: inline-size; }
+.bio-copy .lead { font-size: var(--t-lead); }
+.lead .lw { transition: none; }
+.bio-rest { margin-top: var(--s-9); }
+.bio-cols { display: grid; gap: var(--s-5); max-width: 62ch; text-wrap: pretty; color: var(--luz); }
+@media (min-width: 900px) {
+  .bio-stage { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); min-height: 100svh; padding-block: calc(64px + var(--s-5)) var(--s-6); }
+  .bio-pics { grid-column: 1 / 7; --pw: min(86%, calc((100svh - 190px) * .8)); padding-bottom: 0; align-self: center; }
+  /* la foto en vivo sobresale del retrato hacia el costado oscuro: no tapa el cuerpo */
+  .bio-live { right: auto; left: calc(var(--pw) * .9); bottom: 7%; width: calc(var(--pw) * .4); }
+  .bio-copy { grid-column: 8 / -1; }
+  .bio-copy .title { --span: 1; }
+  .bio-rest { margin-top: var(--s-8); }
+  .bio-cols { display: block; columns: 2; column-gap: calc(var(--gutter) * 2); max-width: none; }
   .bio-cols p { orphans: 3; widows: 3; margin-bottom: var(--s-5); }
   .bio-cols p:last-child { margin-bottom: 0; }
 }
+/* escritorio con movimiento: la escena queda fija ~150vh mientras se abre el retrato y se enciende el lead */
+@media (min-width: 900px) {
+  .js-motion .bio { padding-top: 0; }
+  .js-motion .bio-scene { height: 250svh; }
+  .js-motion .bio-stage { position: sticky; top: 0; height: 100svh; min-height: 0; }
+}
+
+/* datos: un dl real con otra cara. Filas a sangre (la cinta cruza toda la pantalla) */
+.facts {
+  --px: max(var(--margin), calc((100% - 1440px) / 2 + var(--margin)));
+  margin-top: var(--s-9); border-top: 1px solid var(--rule);
+}
+.f-row { display: grid; gap: var(--s-3); padding: var(--s-5) var(--px); border-bottom: 1px solid var(--rule); align-items: baseline; }
+.facts dt { font-family: var(--f-mono); font-weight: 500; font-size: var(--t-label); font-stretch: 112.5%; text-transform: uppercase; letter-spacing: var(--track-mono); color: var(--hielo); line-height: 1.6; }
+.facts dd { margin: 0; min-width: 0; }
+.f-row > * { min-width: 0; }
+.chips { display: flex; flex-wrap: wrap; gap: var(--s-2); }
+.chip {
+  display: inline-flex; align-items: center; min-height: 36px; padding: 0 var(--s-4);
+  border: 1px solid rgb(168 189 255 / .5); border-radius: 0;
+  font-family: var(--f-mono); font-weight: 500; font-size: var(--t-label); font-stretch: 112.5%;
+  text-transform: uppercase; letter-spacing: var(--track-mono); color: var(--luz); line-height: 1;
+}
+.f-ven dd, .f-crew dd, .mq-text {
+  font-family: var(--f-mono); font-weight: 400; font-size: .8125rem; text-transform: uppercase;
+  letter-spacing: var(--track-mono); color: var(--luz); line-height: 1.6;
+}
+.f-b2b { padding-inline: 0; }
+.f-b2b dt, .f-b2b .mq-text { padding-inline: var(--px); display: block; }
+.f-b2b .marquee { margin-top: var(--s-3); }
+/* con la cinta en marcha los nombres se leen ahí; el texto real queda para los lectores de pantalla */
+.f-b2b dd:has(.mq-live) .mq-text {
+  position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap;
+}
+@media (min-width: 900px) {
+  .facts { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .f-gen, .f-b2b { grid-column: 1 / -1; }
+  .f-gen, .f-ven, .f-crew { grid-template-columns: minmax(0, 22ch) minmax(0, 1fr); column-gap: var(--s-6); }
+  .f-ven { padding-right: var(--s-6); border-right: 1px solid var(--rule); }
+  .f-crew { grid-template-columns: minmax(0, 8ch) minmax(0, 1fr); padding-left: var(--s-6); }
+}
+
+/* ---------- cintas de texto (marquees) ---------- */
+.marquee {
+  /* ancho del contenedor, nunca el de su contenido (dentro de una grilla crecería con cada copia) */
+  position: relative; overflow: clip; contain: inline-size paint; width: 100%; min-width: 0;
+  font-family: var(--f-display); font-weight: 800; font-stretch: 125%; text-transform: uppercase;
+  font-size: clamp(3.25rem, 1.6rem + 7.4vw, 10.5rem); line-height: 1; letter-spacing: -.01em; color: var(--luz);
+  padding-block: .06em; white-space: nowrap; user-select: none;
+}
+.mq-track { display: flex; width: max-content; }
+.mq-live .mq-track { will-change: transform; }
+.mq-seq { display: flex; align-items: center; flex: none; }
+.mq-w { padding-inline: .3em; }
+.mq-o { color: transparent; -webkit-text-stroke: 1.5px rgb(237 240 247 / .4); }
+.mq-sep { flex: none; height: .56em; width: auto; fill: var(--laser); filter: drop-shadow(0 0 .12em rgb(62 107 255 / .6)); overflow: visible; }
+.mq-wm { flex: none; height: .7em; width: auto; margin-inline: .3em; color: var(--luz); }
+.mq-b { font-size: clamp(2.75rem, 1.4rem + 5.8vw, 8.5rem); }
+
+/* ---------- sistema de movimiento (§19.4, motion.js) ---------- */
+/* Lenis: scroll suave sólo con puntero fino; los iframes no roban la rueda mientras scrollea */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-stopped { overflow: clip; }
+.lenis.lenis-scrolling iframe { pointer-events: none; }
+[data-lenis-prevent] { overscroll-behavior: contain; }
+/* títulos que esperan su entrada (sólo los marca motion.js; sin JS o reducido no existen) */
+.tw { opacity: 0; }
+/* máscaras con aire arriba para los acentos (Í, Á) y abajo para la línea de base */
+.tw-w-mask, .tw-run .delta { padding-block: .24em .1em; margin-block: -.24em -.1em; }
+.tw-run .delta { display: inline-block; overflow: clip; }
+.tl-l-mask { padding-block: .12em; margin-block: -.12em; }
+/* decode: el texto real queda (transparente) y una capa sin texto accesible muestra los caracteres al azar */
+/* sin transición de color mientras dura (las captions la tienen): motion.js lee el color real al empezar */
+.dc-wait, .dc-run { color: transparent !important; transition: none !important; }
+.dc-rel { position: relative; }
+/* la capa es un ::after con el texto de data-dc (alt vacío: los lectores de pantalla no la leen) */
+.dc-run::after {
+  content: attr(data-dc) / ""; position: absolute; inset: 0; padding: inherit; box-sizing: border-box; pointer-events: none;
+  white-space: inherit; text-align: inherit; overflow: hidden; color: var(--dc-c); text-decoration: none;
+}
+/* cursor de acento: aro en diferencia que sigue al puntero; sobre medios, disco con etiqueta */
+.cur-ring, .cur-disc {
+  position: fixed; left: 0; top: 0; z-index: 90; pointer-events: none; opacity: 0; transition: opacity 200ms;
+}
+.cur-ring.on, .cur-disc.on { opacity: 1; }
+/* el aro exterior se mueve y se muestra (.on); el círculo interior es el que escala con GSAP */
+.cur-ring { width: 32px; height: 32px; margin: -16px 0 0 -16px; mix-blend-mode: difference; }
+.cur-ring > i { display: block; width: 100%; height: 100%; border-radius: 50%; border: 1px solid var(--luz); }
+.cur-disc {
+  width: 84px; height: 84px; margin: -42px 0 0 -42px; border-radius: 50%;
+  display: grid; place-items: center; background: var(--luz); color: var(--negro);
+  box-shadow: 0 0 0 1px rgb(62 107 255 / .6), 0 0 28px rgb(62 107 255 / .45);
+  font-family: var(--f-mono); font-weight: 500; font-size: .6875rem; font-stretch: 112.5%;
+  letter-spacing: .08em; text-transform: uppercase;
+}
 
 /* ---------- FOTOS: grilla escalonada a 45° ---------- */
-.fotos { padding-block: var(--section); content-visibility: auto; contain-intrinsic-size: auto 2600px; }
+.fotos { padding-block: var(--section); }
 .steps { position: relative; container-type: inline-size; }
 .steps > * {
   --cols: 2;
@@ -561,6 +753,94 @@ canvas.bg { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -1; p
   .steps-head .title { font-size: min(var(--t-h2), var(--colw) / (var(--len, 6) * var(--cw))); }
 }
 
+/* ---------- FOTOS en movimiento (§19.7) ----------
+   Base (sin JS y movimiento reducido): la grilla escalonada de arriba. Con movimiento:
+   - táctil o < 900 px: tira horizontal con scroll-snap, parallax interno (gallery.js) y contador;
+   - escritorio con puntero fino (gallery.js pone .is-track): la sección queda fija y el scroll vertical
+     mueve una pista horizontal con ritmo editorial; detrás, "FOTOS" gigante en contorno. */
+.fotos-ghost, .fotos-count { display: none; }
+.frame picture { display: block; width: 100%; height: 100%; }
+.photo-grid { counter-reset: ph; }
+.tile { counter-increment: ph; }
+.fc-n { font-family: var(--f-dot); font-weight: 800; font-size: 2.25rem; line-height: .9; color: var(--luz); font-variant-numeric: tabular-nums; text-shadow: 0 0 .22em rgb(62 107 255 / .55); }
+.fc-t { font-family: var(--f-mono); font-weight: 500; font-size: var(--t-label); font-stretch: 112.5%; letter-spacing: var(--track-mono); color: var(--hielo); }
+.fc-bar { flex: 1; align-self: center; height: 1px; background: var(--rule); max-width: 420px; }
+.fc-bar i { display: block; height: 100%; background: var(--laser); box-shadow: 0 0 8px rgb(62 107 255 / .9); transform-origin: 0 50%; transform: scaleX(0); }
+/* número de cuadro delante del caption, como una hoja de contactos (la capa del decode respeta el padding) */
+.js-motion .fotos .cap { position: relative; padding-left: 3.6em; }
+.js-motion .fotos .cap::before { content: counter(ph, decimal-leading-zero) / ""; position: absolute; left: 0; top: 0; color: var(--hielo); }
+/* hover: la foto se acerca apenas (transición CSS sobre `scale`; GSAP anima sólo la imagen de adentro) */
+.js-motion .photo .frame { transition: scale 600ms var(--ease-tri); }
+.js-motion .photo:hover .frame, .js-motion .photo:focus-visible .frame { scale: 1.04; }
+
+@media not all and (min-width: 900px) and (hover: hover) and (pointer: fine) {
+  .js-motion .fotos .steps-head {
+    position: static; width: auto; height: auto; display: grid; margin-bottom: var(--s-7);
+  }
+  .js-motion .fotos .steps-head .title { font-size: min(var(--t-h2), calc(100cqi / (var(--len, 6) * var(--cw)))); }
+  .js-motion .photo-grid {
+    display: flex; gap: var(--gutter); overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none;
+    scroll-snap-type: x mandatory; scroll-padding-inline: var(--margin);
+    margin-inline: calc(-1 * var(--margin)); padding: 0 var(--margin) var(--s-2);
+  }
+  .js-motion .photo-grid::-webkit-scrollbar { display: none; }
+  .js-motion .fotos .tile { flex: 0 0 min(80vw, 560px); scroll-snap-align: center; translate: none; }
+  /* la imagen es más ancha que el marco: gallery.js la corre según la posición en la tira */
+  .js-motion .fotos .frame picture { position: absolute; inset: 0 -8%; width: auto; }
+  .js-motion .fotos-count { display: flex; align-items: baseline; gap: var(--s-3); margin-top: var(--s-5); }
+  /* las luces suben al entrar por el costado de la tira */
+  @supports (animation-timeline: view()) {
+    .js-motion .fotos .veil::after { animation-timeline: view(inline); animation-range: entry 0% cover 45%; }
+  }
+}
+
+/* escritorio: pista fija. --ah = alto útil para las fotos (debajo del header y arriba del contador) */
+.fotos.is-track { padding-block: 0; height: calc(100svh + var(--travel, 0px)); }
+.fotos.is-track > .wrap { position: sticky; top: 0; width: 100%; height: 100svh; margin: 0; overflow: clip; }
+.is-track .steps {
+  --ah: calc(100svh - 64px - 112px - 2.6rem);
+  container-type: normal; position: absolute; inset: 0 auto 0 0; z-index: 1;
+  display: flex; align-items: center; width: max-content; padding: 64px var(--margin) 112px;
+  will-change: transform;
+}
+.is-track .steps-head {
+  position: relative; left: auto; top: auto; height: auto; flex: none; width: max-content; max-width: 46vw;
+  display: grid; align-content: center; justify-items: start; gap: var(--s-4); margin: 0 4vw 0 0;
+}
+.is-track .steps-head .title { font-size: var(--t-h2); white-space: nowrap; }
+.is-track .steps-head .intro { max-width: 26ch; }
+.is-track .photo-grid { display: flex; align-items: center; gap: 0; padding: 0; height: 100%; }
+.is-track .tile {
+  flex: none; width: calc(var(--ah) * var(--k) * var(--ar)); margin-left: var(--gap, 5vw);
+  translate: 0 calc(var(--ah) * var(--y, 0));
+}
+.is-track .tile:first-child { margin-left: 0; }
+.is-track .photo .frame { aspect-ratio: var(--ar); }
+.is-track .frame picture { position: absolute; inset: 0 -8%; width: auto; transform-origin: 50% 50%; }
+/* las luces suben al entrar por la derecha (--dim lo anima gallery.js) */
+.is-track .veil::after { animation: none; transition: none; opacity: var(--dim, 0); }
+/* ritmo editorial: alto (fracción de --ah), proporción, desplazamiento vertical y aire antes de cada foto */
+.is-track .tile:nth-child(1) { --k: .9;  --ar: .667; --y: -.03; }
+.is-track .tile:nth-child(2) { --k: .56; --ar: .8;   --y: .2;   --gap: 4vw; }
+.is-track .tile:nth-child(3) { --k: .74; --ar: .667; --y: -.12; --gap: 5vw; }
+.is-track .tile:nth-child(4) { --k: .5;  --ar: .8;   --y: .16;  --gap: 3vw; }
+.is-track .tile:nth-child(5) { --k: .92; --ar: .8;   --y: .02;  --gap: 7vw; }
+.is-track .tile:nth-child(6) { --k: .6;  --ar: 1;    --y: -.18; --gap: 4vw; }
+.is-track .tile:nth-child(7) { --k: .7;  --ar: .8;   --y: .13;  --gap: 5vw; }
+.is-track .tile:nth-child(8) { --k: .52; --ar: 1.5;  --y: -.1;  --gap: 6vw; }
+.is-track .tile:nth-child(9) { --k: .64; --ar: .667; --y: .15;  --gap: 5vw; }
+.is-track .fotos-ghost {
+  display: block; position: absolute; left: 26vw; bottom: 9svh; z-index: 0; margin: 0; pointer-events: none;
+  font-family: var(--f-display); font-weight: 800; font-stretch: 125%; text-transform: uppercase;
+  font-size: 46svh; line-height: .78; letter-spacing: -.02em; white-space: nowrap;
+  color: transparent; -webkit-text-stroke: 1px rgb(168 189 255 / .16); will-change: transform;
+}
+.is-track .fotos-count {
+  display: flex; align-items: baseline; gap: var(--s-4); position: absolute; z-index: 2;
+  left: var(--margin); right: var(--margin); bottom: 34px;
+}
+.is-track .fc-n { font-size: 3.5rem; }
+
 /* lightbox */
 .lightbox {
   position: fixed; inset: 0; width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; padding: 0;
@@ -577,9 +857,18 @@ canvas.bg { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -1; p
 .lb-count { color: var(--hielo); }
 .lb-ctrl { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--s-3); }
 body:has(dialog[open]) { overflow: hidden; }
+/* swipe horizontal en táctil (gallery.js); el zoom con dos dedos sigue andando */
+.lb-inner { touch-action: pan-y pinch-zoom; }
+/* View Transition: la foto tocada crece hasta el lightbox (y vuelve al cerrar) */
+::view-transition-group(lb-photo) { animation-duration: 560ms; animation-timing-function: var(--ease-tri); }
+::view-transition-old(lb-photo), ::view-transition-new(lb-photo) { height: 100%; object-fit: cover; }
+/* sin fundido largo entre los dos recortes (se veía la foto doble): la vieja se va rápido y la nueva viaja entera */
+::view-transition-old(lb-photo) { animation: vt-out 180ms ease-out both; }
+::view-transition-new(lb-photo) { animation: none; }
+@keyframes vt-out { to { opacity: 0; } }
 
 /* ---------- EN VIVO ---------- */
-.vivo { padding-block: var(--section); container: live / inline-size; content-visibility: auto; contain-intrinsic-size: auto 1900px; }
+.vivo { padding-block: var(--section); container: live / inline-size; }
 .vivo .sec-head { margin-bottom: var(--s-7); }
 .clips { position: relative; }
 .strip {
@@ -614,6 +903,9 @@ body:has(dialog[open]) { overflow: hidden; }
 .film { margin-top: var(--s-9); row-gap: var(--s-6); }
 .film-media { grid-column: 1 / -1; position: relative; aspect-ratio: 9 / 16; max-width: 420px; background: var(--avg, var(--humo)); overflow: hidden; }
 .film-media img, .film-media video { width: 100%; height: 100%; object-fit: cover; }
+/* el póster se revela por el triángulo (scenes.js); el marco cerrado queda negro */
+.film-media picture { display: block; width: 100%; height: 100%; }
+.js-motion .film-media { background: transparent; }
 .film-text { grid-column: 1 / -1; display: grid; gap: var(--s-4); align-content: center; justify-items: start; }
 .film-meta { font-family: var(--f-mono); font-size: var(--t-small); text-transform: uppercase; letter-spacing: var(--track-mono); color: var(--ceniza); font-variant-numeric: tabular-nums; }
 .film-copy { max-width: 46ch; text-wrap: pretty; }
@@ -623,6 +915,11 @@ body:has(dialog[open]) { overflow: hidden; }
   .film-media { grid-column: 1 / 5; max-width: none; }
   .film-text { grid-column: 6 / 12; }
 }
+
+/* pared de celulares (scenes.js): cada pantalla con un filo de luz y sombra profunda */
+.js-motion .reel-frame { box-shadow: 0 0 0 1px rgb(168 189 255 / .14), 0 40px 80px -20px rgb(0 0 0 / .7); }
+.js-motion .reel-frame video, .js-motion .reel-poster { transition: scale 700ms var(--ease-tri); }
+.js-motion .reel-frame:hover video, .js-motion .reel-frame:hover .reel-poster { scale: 1.03; }
 
 /* ---------- NO TEMPO ---------- */
 /* No Tempo: sin bloque de color. Fondo transparente para que se vea el show de láser (data-haze="1"),
@@ -644,6 +941,10 @@ body:has(dialog[open]) { overflow: hidden; }
 /* el wordmark tiene trazo fino: un poco más alto que las mayúsculas (.82 em) para que pese igual,
    y bajado .05 em para que la base de las letras caiga sobre la línea de base (el viewBox tiene aire abajo) */
 .names .wm-inline { height: .82em; width: auto; display: inline-block; fill: currentColor; align-self: baseline; margin-inline-start: .06em; position: relative; top: .05em; }
+/* la cinta (c) cruza la banda en diagonal suave, con aire debajo de los nombres */
+.notempo .mq-c { margin-top: clamp(40px, 6vw, 104px); rotate: -2deg; }
+/* cada nombre sube desde su máscara (scenes.js) */
+.nm-mask { display: inline-block; overflow: clip; padding-block: .14em .1em; margin-block: -.14em -.1em; }
 .nt-body { display: grid; gap: var(--s-6); align-content: start; }
 .nt-body p { max-width: 52ch; text-wrap: pretty; }
 .nt-links { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-5); }
@@ -747,28 +1048,29 @@ body:has(dialog[open]) { overflow: hidden; }
 /* ---------- movimiento reducido ---------- */
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
-  .play { --tri: 1; transition: none; }
-  .tri-img { opacity: 0; transition: opacity 120ms linear; }
-  .set:hover .tri-img, .set:has(:focus-visible) .tri-img { opacity: 1; }
-  @media (hover: none) { .tri-img { opacity: 1; } }
-  .btn-primary, .link, .cap, .tracklist .tri-ico, .toast { transition-duration: 120ms; }
-  /* sin escala: sólo sube la luz */
-  .set:hover .facade img, .set:has(.play:focus-visible) .facade img { scale: none; }
-  .facade > picture img { transition: filter 120ms linear; }
+  .btn-primary, .link, .cap, .tracklist .tri-ico, .toast, .tri path { transition-duration: 120ms; }
+  /* sin escala: sólo el relleno del triángulo */
+  .media-slot:hover .ap picture img, .set:has(.play:focus-visible) .ap picture img { scale: none; }
+  .media-slot:hover .tri, .play:focus-visible .tri { scale: none; }
   .lightbox[open], .lightbox[open]::backdrop { animation: none; }
   .tracklist::details-content { transition: none; }
+  /* las cintas quedan quietas y los nombres se leen también en texto */
+  .mq-track { transform: none !important; }
 }
 
 /* ---------- sin JS: se ocultan los controles que dependen de JS (los sets siguen con "Abrir en YouTube") ---------- */
 .no-js .video-toggle, .no-js .lang, .no-js .play, .no-js .listen, .no-js .copy-mail, .no-js .film-play, .no-js .reel-toggle { display: none; }
+/* sin JS no hay cintas: los nombres van en texto */
+.no-js .marquee { display: none; }
 .no-js .photo { cursor: default; }
 
 /* ---------- colores forzados ---------- */
 @media (forced-colors: active) {
-  .veil::after, .facade::before, .booking-bg, .stage-fade, .notempo::before, .notempo::after { display: none; }
-  .facade > picture img { filter: none; }
-  .tri-img { display: none; }
-  .tri path { stroke: ButtonText; }
+  .veil::after, .booking-bg, .stage-fade, .notempo::before, .notempo::after, .tri-edge, .cur-ring, .cur-disc { display: none; }
+  .tri path { stroke: ButtonText; fill: none !important; }
+  .mq-o { -webkit-text-stroke: 0; color: CanvasText; }
+  .mq-sep { fill: CanvasText; filter: none; }
+  .bl-frame, .chip { outline-color: CanvasText; border-color: CanvasText; }
   .wordmark, .delta svg, .mono, .mono-sm { color: CanvasText; fill: CanvasText; }
   .btn-primary { background: ButtonFace; color: ButtonText; border-color: ButtonText; }
   .notempo { border-block: 1px solid CanvasText; }

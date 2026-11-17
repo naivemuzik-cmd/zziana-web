@@ -1,11 +1,6 @@
-// haze.js — fondo "Láser en el humo" (WebGL2): humo índigo que sube despacio y 6 haces de láser finos
-// en abanico desde arriba al centro, que barren lento (14–22 s). Se ven sobre todo donde hay humo.
-// Media resolución, 30 fps, en pausa cuando no se ve. Sin WebGL2 / movimiento reducido / ahorro de datos: fondo CSS.
-
 const VERT = `#version 300 es
 in vec2 aPos;
 void main(){ gl_Position = vec4(aPos, 0.0, 1.0); }`;
-
 const FRAG = `#version 300 es
 precision highp float;
 uniform vec2 uRes;
@@ -97,11 +92,9 @@ void main(){
   }
   outColor = vec4(toSrgb(lin), 1.0);
 }`;
-
 export function initHaze({ reduced }) {
   const canvas = document.querySelector('canvas.bg');
   const saveData = !!navigator.connection?.saveData || matchMedia('(prefers-reduced-data: reduce)').matches;
-
   function fallback() {
     canvas?.remove();
     document.body.classList.add('haze-static');
@@ -109,7 +102,6 @@ export function initHaze({ reduced }) {
   if (!canvas || reduced || saveData) return fallback();
   const gl = canvas.getContext('webgl2', { antialias: false, alpha: false, depth: false, stencil: false, powerPreference: 'low-power' });
   if (!gl) return fallback();
-
   function shader(type, src) {
     const s = gl.createShader(type);
     gl.shaderSource(s, src);
@@ -128,7 +120,6 @@ export function initHaze({ reduced }) {
     return fallback();
   }
   gl.useProgram(prog);
-  // un solo triángulo que cubre la pantalla
   const buf = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, buf);
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
@@ -136,12 +127,9 @@ export function initHaze({ reduced }) {
   gl.enableVertexAttribArray(loc);
   gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
   const U = Object.fromEntries(['uRes', 'uTime', 'uIntensity', 'uAngle'].map((n) => [n, gl.getUniformLocation(prog, n)]));
-
-  // tamaño: CSS × min(dpr, 1.5) × 0.5, con tope 1280×720 manteniendo la proporción
   let lastW = 0;
   let lastH = 0;
   function resize() {
-    // en móvil la barra de direcciones cambia sólo el alto: no se rehace el búfer por eso
     if (innerWidth === lastW && Math.abs(innerHeight - lastH) < 120) return;
     lastW = innerWidth; lastH = innerHeight;
     const r = Math.min(devicePixelRatio || 1, 1.5) * 0.5;
@@ -153,8 +141,6 @@ export function initHaze({ reduced }) {
   }
   resize();
   addEventListener('resize', resize);
-
-  /* ---------- estado ---------- */
   let intensity = 0;
   let target = 0;
   let tween = null; // {from, to, t0}
@@ -167,17 +153,14 @@ export function initHaze({ reduced }) {
   let raf = 0;
   let lastFrame = 0;
   const t0 = performance.now();
-
   function setTarget(v) {
     if (v === target) return;
     target = v;
     tween = { from: intensity, to: v, start: performance.now() };
     wake();
   }
-
   function draw(now) {
     const time = (now - t0) / 1000;
-    // el abanico se inclina un poco (±8°) hacia el puntero; el barrido de cada haz va en el shader
     if (fine) pointerAngle += (((pointerX - 0.5) * 2) * (8 * Math.PI / 180) - pointerAngle) * 0.04;
     gl.uniform2f(U.uRes, canvas.width, canvas.height);
     gl.uniform1f(U.uTime, time);
@@ -185,9 +168,7 @@ export function initHaze({ reduced }) {
     gl.uniform1f(U.uAngle, pointerAngle);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
   }
-
   const paused = () => pause.hidden || pause.media || pause.dialog || (intensity <= 0.001 && target <= 0.001);
-
   function frame(now) {
     raf = 0;
     if (dead) return;
@@ -203,14 +184,10 @@ export function initHaze({ reduced }) {
   }
   let dead = false; // contexto perdido: no se vuelve a dibujar
   function wake() { if (!raf && !dead) raf = requestAnimationFrame(frame); }
-
-  // el humo arranca recién cuando termina la secuencia de carga del hero (las ventanas son la luz principal)
   let introOk = !!window.__zzIntro || !document.documentElement.classList.contains('js-motion');
   let wanted = 0;
   const go = () => { if (introOk) return; introOk = true; setTarget(wanted); };
   if (!introOk) { document.addEventListener('zz:intro', go, { once: true }); setTimeout(go, 4000); }
-
-  // intensidad según la sección más cercana al centro de la pantalla
   const io = new IntersectionObserver((entries) => {
     for (const en of entries) {
       if (!en.isIntersecting) continue;
@@ -219,7 +196,6 @@ export function initHaze({ reduced }) {
     }
   }, { rootMargin: '-50% 0px -50% 0px' });
   for (const el of document.querySelectorAll('[data-haze]')) io.observe(el);
-
   document.addEventListener('visibilitychange', () => { pause.hidden = document.hidden; if (!pause.hidden) wake(); });
   document.addEventListener('zz:media', (e) => {
     const { source, playing } = e.detail;
@@ -228,8 +204,6 @@ export function initHaze({ reduced }) {
     if (!paused()) wake();
   });
   canvas.addEventListener('webglcontextlost', (e) => { e.preventDefault(); dead = true; cancelAnimationFrame(raf); raf = 0; fallback(); });
-
-  // arrancar después del primer pintado
   const start = () => requestAnimationFrame(() => { draw(performance.now()); wake(); });
   if (document.readyState === 'complete') start(); else addEventListener('load', start, { once: true });
 }

@@ -1,20 +1,17 @@
-// main.js — entrada: banderas, idioma (ES/EN), delta-A, header, nav activa, menú, copiar mail, revelados.
+import { initMotion, motion } from './motion.js';
 import { initHero } from './hero.js';
 import { initSets } from './sets.js';
+import { initBio } from './bio.js';
 import { initGallery } from './gallery.js';
 import { initClips } from './clips.js';
+import { initScenes } from './scenes.js';
 import { initHaze } from './haze.js';
-
 const html = document.documentElement;
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-const motion = html.classList.contains('js-motion');
-
-/* ---------- i18n ---------- */
+const hasMotion = html.classList.contains('js-motion');
 const EN = JSON.parse(document.getElementById('i18n-en').textContent);
 const ES = JSON.parse(document.getElementById('i18n-es').textContent);
 const metaDesc = document.querySelector('meta[name="description"]');
-
-// guardar una sola vez los originales en español (texto y atributos)
 for (const el of document.querySelectorAll('[data-i18n]')) {
   const key = el.dataset.i18n;
   if (!(key in ES)) ES[key] = el.textContent;
@@ -22,20 +19,15 @@ for (const el of document.querySelectorAll('[data-i18n]')) {
 for (const el of document.querySelectorAll('[data-i18n-attr]')) {
   for (const [attr, key] of pairs(el)) if (!(key in ES)) ES[key] = el.getAttribute(attr) ?? '';
 }
-// Doto: si no carga, se apagan la grilla y los dos puntos dibujados (están medidos sobre su grilla)
 document.fonts?.load('800 1em Doto').then((f) => { if (!f.length) html.classList.add('dot-off'); }, () => html.classList.add('dot-off'));
-
 ES['meta.title'] = document.title;
 ES['meta.desc'] = metaDesc?.content ?? ''; // dentro de un visor ajeno (link de propuesta) puede no haber <meta>
-
 let lang = 'es';
 export const t = (key) => (lang === 'en' ? EN[key] : ES[key]) ?? ES[key] ?? key;
 export const getLang = () => lang;
-
 function pairs(el) {
   return el.dataset.i18nAttr.split(';').filter(Boolean).map((p) => p.split(':').map((s) => s.trim()));
 }
-
 function applyLang(next, save = true) {
   lang = next === 'en' ? 'en' : 'es';
   for (const el of document.querySelectorAll('[data-i18n]')) el.textContent = t(el.dataset.i18n);
@@ -50,7 +42,6 @@ function applyLang(next, save = true) {
   if (save) { try { localStorage.setItem('zz-lang', lang); } catch { /* sin almacenamiento */ } }
   document.dispatchEvent(new CustomEvent('zz:lang', { detail: { lang } }));
 }
-
 function initialLang() {
   const q = new URLSearchParams(location.search).get('lang');
   if (q === 'en' || q === 'es') return q;
@@ -60,20 +51,15 @@ function initialLang() {
   } catch { /* sin almacenamiento */ }
   return (navigator.language || 'es').toLowerCase().startsWith('es') ? 'es' : 'en';
 }
-
-/* ---------- delta-A: cada A de h2.title se dibuja como el triángulo del logo ---------- */
 function deltaA() {
   for (const h of document.querySelectorAll('h2.title')) {
     const text = h.dataset.i18n ? t(h.dataset.i18n) : h.textContent;
-    // largo en "mayúsculas" (un espacio pesa ~0,4): el CSS ajusta el tamaño para que el título entre sin cortar
     const len = text.replace(/\s/g, '').length + 0.4 * (text.match(/\s/g) || []).length;
     h.style.setProperty('--len', len.toFixed(1));
     h.toggleAttribute('data-long', len >= 11);
     if (!/[aA]/.test(text)) { h.removeAttribute('aria-label'); continue; }
-    // un solo nombre accesible: algunos lectores leen 'Biogr / a / fía' si la palabra queda en varios trozos
     h.setAttribute('aria-label', text);
     const frag = document.createDocumentFragment();
-    // cada palabra con A va en un span sin corte: el SVG no debe partir la palabra
     text.split(/(\s+)/).forEach((word) => {
       if (!/[aA]/.test(word)) { if (word) frag.append(word); return; }
       const w = document.createElement('span');
@@ -94,15 +80,13 @@ function deltaA() {
     h.replaceChildren(frag);
   }
 }
-
-/* ---------- scroll a anclas (sin scroll-behavior en CSS: rompe ScrollTrigger) ---------- */
 function scrollToEl(el, focusEl = el) {
+  if (motion.on) { motion.scrollTo(el, { focus: focusEl }); return; }
   const behavior = reduced ? 'instant' : 'smooth';
   if (el.id === 'top') window.scrollTo({ top: 0, behavior });
   else el.scrollIntoView({ behavior, block: 'start' });
   if (focusEl) focusEl.focus({ preventScroll: true });
 }
-
 document.addEventListener('click', (e) => {
   const a = e.target.closest('a[href^="#"]');
   if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey) return;
@@ -113,7 +97,6 @@ document.addEventListener('click', (e) => {
   const menu = document.getElementById('menu');
   if (menu.matches(':popover-open')) menu.hidePopover();
   if (a.classList.contains('watch-c')) {
-    // "Ver la Session #01": baja al set C y enfoca su botón de play (no reproduce)
     scrollToEl(target, target.querySelector('.facade:not([hidden]) .play') || target.querySelector('.listen'));
   } else if (id === 'top') {
     scrollToEl(target, null);
@@ -123,8 +106,6 @@ document.addEventListener('click', (e) => {
   }
   history.replaceState(null, '', id === 'top' ? location.pathname + location.search : '#' + id);
 });
-
-/* ---------- header: sólido al salir del hero; ítem activo ---------- */
 function initHeader() {
   const header = document.querySelector('.site-header');
   const sentinel = document.querySelector('.hero-sentinel');
@@ -132,7 +113,6 @@ function initHeader() {
     const past = !en.isIntersecting && en.boundingClientRect.top < 0;
     header.toggleAttribute('data-solid', past);
   }).observe(sentinel);
-
   const links = [...document.querySelectorAll('.nav a, .menu a')];
   const ids = ['sets', 'bio', 'fotos', 'en-vivo', 'no-tempo', 'contratar'];
   const io = new IntersectionObserver((entries) => {
@@ -145,13 +125,10 @@ function initHeader() {
     }
   }, { rootMargin: '-45% 0px -50% 0px' });
   for (const id of ids) { const s = document.getElementById(id); if (s) io.observe(s); }
-  // al volver al hero no queda ningún ítem activo
   new IntersectionObserver(([en]) => {
     if (en.isIntersecting) for (const a of links) a.removeAttribute('aria-current');
   }, { rootMargin: '-45% 0px -50% 0px' }).observe(document.querySelector('.hero .stage'));
 }
-
-/* ---------- copiar mail ---------- */
 function initCopy() {
   const btn = document.querySelector('.copy-mail');
   const mail = document.querySelector('.mail');
@@ -162,7 +139,6 @@ function initCopy() {
     let ok = false;
     try { await navigator.clipboard.writeText(addr); ok = true; } catch { /* sin portapapeles */ }
     if (!ok) {
-      // respaldo: dejar el texto seleccionado para copiarlo a mano
       const r = document.createRange(); r.selectNodeContents(mail);
       const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r);
       try { ok = document.execCommand('copy'); } catch { ok = false; }
@@ -174,10 +150,8 @@ function initCopy() {
     timer = setTimeout(() => { toast.classList.remove('show'); toast.textContent = ''; }, 2400);
   });
 }
-
-/* ---------- respaldos sin scroll-driven animations: revelados y velos ---------- */
 function initFallbacks() {
-  if (!motion) return;
+  if (!hasMotion) return;
   if (!CSS.supports('animation-timeline: view()')) {
     const io = new IntersectionObserver((entries) => {
       for (const en of entries) {
@@ -188,7 +162,6 @@ function initFallbacks() {
     }, { rootMargin: '0px 0px -12% 0px' });
     for (const el of document.querySelectorAll('.reveal, .veil')) io.observe(el);
   }
-  // trazos que se dibujan una vez: triángulos de play y dibujo del rider
   const draw = new IntersectionObserver((entries) => {
     for (const en of entries) {
       if (!en.isIntersecting) continue;
@@ -199,25 +172,34 @@ function initFallbacks() {
       setTimeout(() => { el.classList.remove('drawing'); el.classList.add('drawn'); }, ms + 80);
     }
   }, { threshold: 0.35 });
-  for (const el of document.querySelectorAll('.set, .rider')) draw.observe(el);
+  for (const el of document.querySelectorAll('.rider')) draw.observe(el);
 }
-
-/* ---------- arranque ---------- */
 function boot() {
   for (const b of document.querySelectorAll('.lang-btn')) b.addEventListener('click', () => applyLang(b.dataset.lang));
   const first = initialLang();
   if (first === 'en') applyLang('en', false);
   else deltaA();
-
-  const ctx = { t, reduced, motion, getLang };
+  const ctx = { t, reduced, motion: hasMotion, getLang };
+  initMotion(ctx);
   initHeader();
   initHero(ctx);
   initSets(ctx);
+  initBio(ctx);
   initGallery(ctx);
   initClips(ctx);
+  initScenes();
   initCopy();
   initFallbacks();
   initHaze(ctx);
+  initReveals();
 }
-
+function initReveals() {
+  if (!motion.on) return;
+  for (const h of document.querySelectorAll('h2.title')) motion.revealTitle(h);
+  for (const h of document.querySelectorAll('.set-title')) motion.revealLines(h);
+  const mono = '.eyebrow > span[data-i18n]:not(.now), .sec-head .tag, .set-meta, .facts dt, .cap, .reel-cap';
+  for (const el of document.querySelectorAll(mono)) motion.decode(el);
+  motion.marquee(document.querySelector('.mq-a'), { dir: -1 });
+  motion.marquee(document.querySelector('.mq-c'), { dir: -1 });
+}
 boot();
