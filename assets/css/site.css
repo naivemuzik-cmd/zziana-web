@@ -390,6 +390,8 @@ article.set:first-of-type { padding-top: 0; }
 }
 .msets-list::-webkit-scrollbar { display: none; }
 .mset { --th: 52px; flex: 0 0 min(78vw, 440px); scroll-snap-align: start; display: grid; align-content: start; gap: var(--s-3); }
+/* escritorio: los tres en una fila, sin scroll lateral */
+@media (min-width: 900px) { .mset { flex: 1 1 0; max-width: 440px; } }
 .mset .media-slot { overflow: hidden; box-shadow: 0 0 0 1px rgb(168 189 255 / .14); }
 .mset-eyebrow {
   margin-top: var(--s-2); font-family: var(--f-mono); font-size: var(--t-small); text-transform: uppercase;
