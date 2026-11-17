@@ -1,7 +1,9 @@
 import { motion } from './motion.js';
 export function initBio({ t }) {
   const sec = document.getElementById('bio');
-  if (!sec || !motion.on) return;
+  if (!sec) return;
+  initMore(sec, t);
+  if (!motion.on) return;
   const gsap = window.gsap;
   const scene = sec.querySelector('.bio-scene');
   const fig = sec.querySelector('.bio-portrait');
@@ -10,7 +12,7 @@ export function initBio({ t }) {
   const live = sec.querySelector('.bio-live');
   const lframe = sec.querySelector('.bl-frame');
   const lead = sec.querySelector('.lead');
-  motion.marquee(sec.querySelector('.mq-b'), { dir: 1 });
+  motion.marquee(sec.querySelector('.mq-b'), { dir: 1, rate: 3.2 });
   motion.skew(lframe, { max: 3 });
   motion.skew(fig, { max: 2, when: () => innerWidth < 900 });
   const mm = gsap.matchMedia();
@@ -58,5 +60,19 @@ export function initBio({ t }) {
     leadMM.revert();
     lead.textContent = t(lead.dataset.i18n);
     buildLead();
+  });
+}
+function initMore(sec, t) {
+  const more = sec.querySelector('.bio-more');
+  const rest = sec.querySelector('.bio-rest');
+  if (!more || !rest) return;
+  more.addEventListener('click', () => {
+    const open = more.getAttribute('aria-expanded') !== 'true';
+    more.setAttribute('aria-expanded', String(open));
+    rest.classList.toggle('open', open);
+    more.dataset.i18n = open ? 'bio.less' : 'bio.more';
+    more.textContent = t(more.dataset.i18n);
+    if (!open) more.scrollIntoView({ block: 'nearest' });
+    window.ScrollTrigger?.refresh();
   });
 }

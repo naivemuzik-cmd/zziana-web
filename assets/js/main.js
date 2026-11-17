@@ -12,18 +12,19 @@ const hasMotion = html.classList.contains('js-motion');
 const EN = JSON.parse(document.getElementById('i18n-en').textContent);
 const ES = JSON.parse(document.getElementById('i18n-es').textContent);
 const metaDesc = document.querySelector('meta[name="description"]');
+const BASE = html.lang.startsWith('es') ? ES : EN;
 for (const el of document.querySelectorAll('[data-i18n]')) {
   const key = el.dataset.i18n;
-  if (!(key in ES)) ES[key] = el.textContent;
+  if (!(key in BASE)) BASE[key] = el.textContent;
 }
 for (const el of document.querySelectorAll('[data-i18n-attr]')) {
-  for (const [attr, key] of pairs(el)) if (!(key in ES)) ES[key] = el.getAttribute(attr) ?? '';
+  for (const [attr, key] of pairs(el)) if (!(key in BASE)) BASE[key] = el.getAttribute(attr) ?? '';
 }
 document.fonts?.load('800 1em Doto').then((f) => { if (!f.length) html.classList.add('dot-off'); }, () => html.classList.add('dot-off'));
-ES['meta.title'] = document.title;
-ES['meta.desc'] = metaDesc?.content ?? ''; // dentro de un visor ajeno (link de propuesta) puede no haber <meta>
-let lang = 'es';
-export const t = (key) => (lang === 'en' ? EN[key] : ES[key]) ?? ES[key] ?? key;
+BASE['meta.title'] ??= document.title;
+BASE['meta.desc'] ??= metaDesc?.content ?? ''; // dentro de un visor ajeno (link de propuesta) puede no haber <meta>
+let lang = BASE === ES ? 'es' : 'en';
+export const t = (key) => (lang === 'en' ? EN[key] : ES[key]) ?? BASE[key] ?? key;
 export const getLang = () => lang;
 function pairs(el) {
   return el.dataset.i18nAttr.split(';').filter(Boolean).map((p) => p.split(':').map((s) => s.trim()));
@@ -49,7 +50,7 @@ function initialLang() {
     const s = localStorage.getItem('zz-lang');
     if (s === 'en' || s === 'es') return s;
   } catch { /* sin almacenamiento */ }
-  return (navigator.language || 'es').toLowerCase().startsWith('es') ? 'es' : 'en';
+  return 'en'; // por defecto inglés, en cualquier navegador: el botón ES·EN cambia y se recuerda
 }
 function deltaA() {
   for (const h of document.querySelectorAll('h2.title')) {
@@ -177,7 +178,7 @@ function initFallbacks() {
 function boot() {
   for (const b of document.querySelectorAll('.lang-btn')) b.addEventListener('click', () => applyLang(b.dataset.lang));
   const first = initialLang();
-  if (first === 'en') applyLang('en', false);
+  if (first !== lang) applyLang(first, false);
   else deltaA();
   const ctx = { t, reduced, motion: hasMotion, getLang };
   initMotion(ctx);

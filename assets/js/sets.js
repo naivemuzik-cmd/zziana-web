@@ -43,6 +43,7 @@ export function initSets({ t, reduced }) {
     stopPrev(set);
     const key = set.dataset.key;
     const id = set.dataset.yt;
+    for (const m of msets) closeM(m);
     const facade = set.querySelector('.facade');
     const tri = set.querySelector('.tri');
     const player = document.createElement('div');
@@ -98,6 +99,39 @@ export function initSets({ t, reduced }) {
     });
     new ResizeObserver(() => { if (det.open) isolate(panel); }).observe(panel);
   }
+  const msets = [...document.querySelectorAll('.mset')];
+  function closeM(m) {
+    const p = m.querySelector('.player');
+    if (!p) return;
+    p.remove();
+    m.querySelector('.facade').hidden = false;
+    delete m.dataset.state;
+  }
+  for (const m of msets) {
+    const play = m.querySelector('.play');
+    if (play.tagName !== 'BUTTON') continue; // link de propuesta: es un enlace a YouTube
+    m.addEventListener('pointerenter', preconnect, { once: true });
+    m.addEventListener('focusin', preconnect, { once: true });
+    play.addEventListener('click', () => {
+      if (m.dataset.state) return;
+      for (const s of sets) close(s, false, false);
+      for (const o of msets) if (o !== m) closeM(o);
+      const player = document.createElement('div');
+      player.className = 'player';
+      const iframe = document.createElement('iframe');
+      iframe.src = `https://www.youtube-nocookie.com/embed/${m.dataset.yt}?autoplay=1&rel=0&modestbranding=1`;
+      iframe.title = t(`${m.dataset.key}.iframe`);
+      iframe.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+      player.append(iframe);
+      const facade = m.querySelector('.facade');
+      facade.hidden = true;
+      facade.after(player);
+      m.dataset.state = 'open';
+      media(true);
+      iframe.focus();
+      announce(t('set.nowplaying') + t(`${m.dataset.key}.title`));
+    });
+  }
   function isolate(panel) {
     panel.toggleAttribute('data-lenis-prevent', panel.scrollHeight > panel.clientHeight + 1);
   }
@@ -109,6 +143,7 @@ export function initSets({ t, reduced }) {
   function video(set) {
     if (!set._prev) {
       const tpl = set.querySelector('.prev-tpl');
+      if (!tpl) return null; // set D: no hay video de esa noche
       const v = tpl.content.firstElementChild.cloneNode(true);
       v.addEventListener('playing', () => { if (cur === set) set.classList.add('prev-on'); });
       tpl.after(v);
@@ -116,10 +151,10 @@ export function initSets({ t, reduced }) {
     }
     return set._prev;
   }
-  function preload(set) { if (allowPrev) video(set).preload = 'auto'; }
+  function preload(set) { const v = allowPrev && video(set); if (v) v.preload = 'auto'; }
   function startPrev(set) {
     if (!allowPrev || block.set || block.film || block.dialog || set.dataset.state) return;
-    if (set.querySelector('.tracklist').open) return;
+    if (set.querySelector('.tracklist').open || !set.querySelector('.prev-tpl')) return;
     if (cur && cur !== set) stopPrev(cur);
     cur = set;
     const v = video(set);
@@ -160,7 +195,7 @@ export function initSets({ t, reduced }) {
     if (playing && cur) stopPrev(cur);
   });
   document.addEventListener('zz:lang', () => {
-    for (const s of sets) {
+    for (const s of [...sets, ...msets]) {
       const f = s.querySelector('.player iframe');
       if (f) f.title = t(`${s.dataset.key}.iframe`);
     }
@@ -173,35 +208,11 @@ function initStage(sets, preload) {
   const stackMQ = matchMedia('(min-width: 900px)');
   const ro = new ResizeObserver(() => { for (const s of sets) s.style.setProperty('--h', `${s.offsetHeight}px`); });
   for (const s of sets) ro.observe(s);
-  const counters = sets.map((s) => {
-    const time = s.querySelector('.dur time');
-    const nodes = [...time.childNodes].filter((n) => n.nodeType === 3);
-    const finals = nodes.map((n) => n.nodeValue);
-    const parts = finals.map(Number);
-    const total = parts.reduce((acc, v) => acc * 60 + v, 0);
-    const real = document.createElement('span');
-    real.className = 'vh';
-    real.textContent = time.textContent;
-    time.after(real);
-    time.setAttribute('aria-hidden', 'true');
-    const render = (sec) => {
-      let rest = Math.round(sec);
-      const vals = [];
-      for (let i = parts.length - 1; i >= 0; i--) { vals[i] = i ? rest % 60 : rest; rest = Math.floor(rest / 60); }
-      nodes.forEach((n, i) => { n.nodeValue = String(vals[i]).padStart(finals[i].length, '0'); });
-    };
-    const settle = () => { render(total); time.removeAttribute('aria-hidden'); real.remove(); };
-    render(0);
-    return { total, render, settle };
-  });
   const activate = (s, i) => {
     if (s.dataset.on) return;
     s.dataset.on = '1';
     s.classList.add('drawing');
     setTimeout(() => { s.classList.remove('drawing'); s.classList.add('drawn'); }, 1000);
-    const c = counters[i];
-    const o = { v: 0 };
-    gsap.to(o, { v: c.total, duration: 1.25, ease: 'power3.out', onUpdate: () => c.render(o.v), onComplete: c.settle });
     preload(s);
   };
   sets.forEach((s) => {

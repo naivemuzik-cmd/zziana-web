@@ -28,13 +28,6 @@ function initLive(gsap) {
       gsap.fromTo(r, { yPercent: s }, { yPercent: -s, ease: 'none', scrollTrigger: { trigger: strip, start: 'top bottom', end: 'bottom top', scrub: 0.4 } });
     });
   });
-  const film = document.querySelector('.film-media');
-  const pic = film?.querySelector('picture');
-  if (pic) {
-    motion.triReveal(pic, { trigger: film, start: 'top 88%', end: 'top 28%', edge: film, size: 0.5 });
-    const img = pic.querySelector('img');
-    gsap.fromTo(img, { scale: 1.14 }, { scale: 1, ease: 'none', scrollTrigger: { trigger: film, start: 'top bottom', end: 'bottom 40%', scrub: 0.5 } });
-  }
 }
 function initNoTempo(gsap) {
   const names = document.querySelector('.notempo .names');

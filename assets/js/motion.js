@@ -222,7 +222,7 @@ function runDecode(el, duration, delay, pool) {
   };
   motion.onTick(fn);
 }
-function marquee(el, { speed, dir = -1 } = {}) {
+function marquee(el, { speed, rate = 0.42, dir = -1 } = {}) {
   const track = el?.querySelector('.mq-track');
   const seq = track?.querySelector('.mq-seq');
   if (!motion.on || !seq) return null;
@@ -235,7 +235,7 @@ function marquee(el, { speed, dir = -1 } = {}) {
     if (!w) return;
     const need = Math.ceil(el.clientWidth / w) + 1;
     while (track.children.length < Math.min(need, 12)) track.append(seq.cloneNode(true));
-    px = speed ?? parseFloat(getComputedStyle(el).fontSize) * 0.42; // px/s
+    px = speed ?? parseFloat(getComputedStyle(el).fontSize) * rate; // px/s (rate: cuerpos de letra por segundo)
     if (dir > 0 && x === 0) x = -w;
   };
   fill();

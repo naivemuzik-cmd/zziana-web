@@ -84,31 +84,43 @@ export function initClips({ t, reduced }) {
     }
   }, { root: strip, threshold: 0.6 });
   for (const r of reels) cio.observe(r.el);
-  const filmBtn = document.querySelector('.film-play');
-  const slot = document.querySelector('.film-media');
-  const tpl = document.querySelector('.film-tpl');
-  let film = null;
-  const filmMedia = (playing) => {
-    if (playing) block.film = true;
-    document.dispatchEvent(new CustomEvent('zz:media', { detail: { source: 'film', playing } }));
+  const lv = document.querySelector('.loop-video');
+  const lbtn = document.querySelector('.loop-toggle');
+  let lseen = false;
+  let lpaused = !auto;
+  const llabel = () => {
+    lbtn.dataset.i18n = lv.paused ? 'loop.play' : 'loop.pause';
+    lbtn.textContent = t(lbtn.dataset.i18n);
   };
-  filmBtn.addEventListener('click', () => {
-    if (!film) {
-      film = tpl.content.firstElementChild.cloneNode(true);
-      slot.replaceChildren(film);
-      film.addEventListener('play', () => filmMedia(true));
-      film.addEventListener('pause', () => filmMedia(false));
-      film.addEventListener('ended', () => filmMedia(false));
-    }
-    filmMedia(true);
-    film.play().catch(() => { /* con controles nativos, el usuario puede darle play */ });
-    film.focus();
-  });
+  const lplay = () => {
+    if (lv.preload !== 'auto') lv.preload = 'auto';
+    lv.play()?.catch(llabel);
+  };
+  const loopCheck = () => {
+    if (!lv || !lbtn) return;
+    if (lseen && !lpaused && !blocked()) lplay();
+    else if (!lv.paused) lv.pause();
+  };
+  if (lv && lbtn) {
+    let lt = 0;
+    new IntersectionObserver(([en]) => {
+      lseen = en.isIntersecting;
+      clearTimeout(lt);
+      lt = setTimeout(loopCheck, lseen ? 350 : 1500);
+    }, { threshold: 0.25 }).observe(lv);
+    lv.addEventListener('play', llabel);
+    lv.addEventListener('pause', llabel);
+    lbtn.addEventListener('click', () => {
+      lpaused = !lv.paused;
+      if (lpaused) lv.pause(); else lplay();
+    });
+    llabel();
+  }
   document.addEventListener('zz:media', (e) => {
     const { source, playing } = e.detail;
     if (!(source in block)) return;
     block[source] = playing;
-    if (source === 'set' && playing && film && !film.paused) film.pause();
+    loopCheck();
     if (playing) for (const r of reels) { if (!r.video.paused) r.video.pause(); r.userPlayed = false; }
     decide();
   });
